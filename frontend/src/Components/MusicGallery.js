@@ -13,7 +13,7 @@ export default function MusicGallery({ musicList }) {
     }
   });
   return (
-    <Flex wrap="wrap" maxH="500" minH="500" minW="100vw">
+    <Flex wrap="wrap" minH="500" minW="100vw">
       {musicBoxes}
     </Flex>
   );

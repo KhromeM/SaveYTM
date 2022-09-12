@@ -1,4 +1,14 @@
-import { Box, Text, Flex, Button, Heading } from '@chakra-ui/react';
+import { Box, Text, Flex, Button, Heading, Image } from '@chakra-ui/react';
+import {
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  MenuItemOption,
+  MenuGroup,
+  MenuOptionGroup,
+  MenuDivider,
+} from '@chakra-ui/react';
 import { useAuth } from '../Utils/auth';
 export default function NavBar() {
   return (
@@ -15,28 +25,41 @@ export default function NavBar() {
         </Heading>
       </Box>
       <Flex ml="auto" mr="10">
-        <Signin />
+        <Auth />
       </Flex>
     </Flex>
   );
 }
 
-const Signin = () => {
+const Auth = () => {
   const { user, login, logout } = useAuth();
   const handleAuth = () => {
     user ? logout() : login();
   };
   return (
-    <Box mr="10">
-      <Button
-        color="white"
-        bg="red.600"
-        onClick={handleAuth}
-        colorScheme="red"
-        size="md"
-      >
-        {user ? `Sign Out` : `Sign In`}
-      </Button>
+    <Box>
+      {user ? (
+        <Menu>
+          <MenuButton>
+            <Image src={user.photoURL} borderRadius="full" boxSize="40px" />
+          </MenuButton>
+          <MenuList>
+            {/* <MenuItem>Account</MenuItem> */}
+            {/* <MenuItem>Settings</MenuItem>  */}
+            <MenuItem onClick={handleAuth}>Logout</MenuItem>
+          </MenuList>
+        </Menu>
+      ) : (
+        <Button
+          color="white"
+          bg="red.600"
+          onClick={handleAuth}
+          colorScheme="red"
+          size="md"
+        >
+          {`Sign In`}
+        </Button>
+      )}
     </Box>
   );
 };

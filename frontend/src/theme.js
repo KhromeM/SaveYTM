@@ -13,6 +13,11 @@ const myTheme = extendTheme({
     heading: `'Noto Sans', sans-serif`,
     body: `'Noto Sans', sans-serif`,
   },
+  colors: {
+    youtube: {
+      gray: '#212121',
+    },
+  },
 });
 
 export default myTheme;

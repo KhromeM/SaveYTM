@@ -27,8 +27,7 @@ export default function MusicBar({ title, thumbnail, artist }) {
         padding="3"
       >
         <Text fontSize="lg" noOfLines={1}>
-          {' '}
-          {title}{' '}
+          {title}
         </Text>
         <Text fontSize="sm"> {artist} </Text>
       </Flex>
