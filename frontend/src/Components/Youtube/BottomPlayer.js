@@ -11,8 +11,24 @@ import { BsPlayFill } from 'react-icons/bs';
 import { FaForward, FaBackward } from 'react-icons/fa';
 import { MdLoop } from 'react-icons/md';
 import { AiFillSound } from 'react-icons/ai';
+import { usePlayer } from '../../Utils/player';
+import YouTube from 'react-youtube';
 
 export default function BottomPlayer() {
+  const { player, setPlayer, opts } = usePlayer();
+  const playlist = ['FlJqvq9Ua7I', 'tNideOigKaI', 'Ftl7-aQgywM', 'JwAjANmjajc'];
+
+  return <Box> {player ? <BottomPlayerComponent /> : <CreatePlayer />}</Box>;
+}
+
+const CreatePlayer = () => {
+  const { player, setPlayer, opts } = usePlayer();
+  return <YouTube onReady={event => setPlayer(event.target)} opts={opts} />;
+};
+
+const BottomPlayerComponent = () => {
+  const playlist = ['FlJqvq9Ua7I', 'tNideOigKaI', 'Ftl7-aQgywM', 'JwAjANmjajc'];
+  const { player, setPlayer, opts } = usePlayer();
   const music = {
     thumbnail: 'https://i.ytimg.com/vi/GdzrrWA8e7A/maxresdefault.jpg',
     title:
@@ -103,4 +119,4 @@ export default function BottomPlayer() {
       </Flex>
     </Box>
   );
-}
+};
