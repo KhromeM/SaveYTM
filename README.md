@@ -1,3 +1,3 @@
 # Website: https://www.saveytm.com
 
-## SaveYTM: Archive your playlists
+## SaveYTM: A Better Youtube Music Player + Archive Your Playlists
