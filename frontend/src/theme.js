@@ -2,7 +2,7 @@ import { extendTheme, theme } from '@chakra-ui/react';
 import { mode } from '@chakra-ui/theme-tools';
 import '@fontsource/roboto';
 import '@fontsource/noto-sans';
-const myTheme = extendTheme({
+let myTheme = extendTheme({
   styles: {
     global: props => ({
       body: {

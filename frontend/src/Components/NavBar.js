@@ -37,7 +37,10 @@ const Auth = () => {
           <MenuButton>
             <Image src={user.photoURL} borderRadius="full" boxSize="40px" />
           </MenuButton>
-          <MenuList bg="youtube.gray">
+          <MenuList
+            bg="youtube.gray"
+            // _hover={{ bg: 'red.800' }}
+          >
             {/* <MenuItem>Account</MenuItem> */}
             {/* <MenuItem>Settings</MenuItem>  */}
             <MenuItem onClick={handleAuth}>Logout</MenuItem>

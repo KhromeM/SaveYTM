@@ -8,7 +8,7 @@ export default function MusicGallery({ musicList }) {
   musicList.forEach((musicObj, index) => {
     tempHolder.push(musicObj);
     if (tempHolder.length === 4 || index === musicList.length - 1) {
-      musicBoxes.push(<MusicBox musicList={tempHolder} />);
+      musicBoxes.push(<MusicBox musicList={tempHolder} key={index} />);
       tempHolder = [];
     }
   });
