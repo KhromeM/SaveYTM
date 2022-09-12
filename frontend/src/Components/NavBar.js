@@ -1,18 +1,12 @@
 import { Box, Text, Flex, Button, Heading, Image } from '@chakra-ui/react';
-import {
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
-  MenuItemOption,
-  MenuGroup,
-  MenuOptionGroup,
-  MenuDivider,
-} from '@chakra-ui/react';
+import { Menu, MenuButton, MenuList, MenuItem } from '@chakra-ui/react';
 import { useAuth } from '../Utils/auth';
 export default function NavBar() {
   return (
     <Flex
+      bg="black"
+      position="fixed"
+      top="0"
       minW="100vw"
       maxW="100vw"
       height="7vh"
@@ -43,7 +37,7 @@ const Auth = () => {
           <MenuButton>
             <Image src={user.photoURL} borderRadius="full" boxSize="40px" />
           </MenuButton>
-          <MenuList>
+          <MenuList bg="youtube.gray">
             {/* <MenuItem>Account</MenuItem> */}
             {/* <MenuItem>Settings</MenuItem>  */}
             <MenuItem onClick={handleAuth}>Logout</MenuItem>

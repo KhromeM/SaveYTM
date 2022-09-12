@@ -3,7 +3,7 @@ import { Box, Text, Flex, Button, Heading, Image } from '@chakra-ui/react';
 export default function MusicBar({ title, thumbnail, artist }) {
   return (
     <Flex
-      minW="400"
+      minW={[300, 300, 300, 400, 550]}
       maxW="400"
       maxH="70"
       minH="70"
@@ -13,7 +13,6 @@ export default function MusicBar({ title, thumbnail, artist }) {
     >
       <Image
         src={thumbnail}
-        w="100"
         h="58"
         objectFit="cover"
         borderRadius="3px"

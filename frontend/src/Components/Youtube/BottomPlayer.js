@@ -11,6 +11,7 @@ import { BsPlayFill } from 'react-icons/bs';
 import { FaForward, FaBackward } from 'react-icons/fa';
 import { MdLoop } from 'react-icons/md';
 import { AiFillSound } from 'react-icons/ai';
+
 export default function BottomPlayer() {
   const music = {
     thumbnail: 'https://i.ytimg.com/vi/GdzrrWA8e7A/maxresdefault.jpg',
@@ -29,7 +30,7 @@ export default function BottomPlayer() {
     >
       <Flex alignItems="center" minH="65" maxH="65">
         <Icon
-          ml="5"
+          ml="7"
           as={FaBackward}
           fontSize={15}
           onClick={() => console.log('click')}
@@ -46,6 +47,7 @@ export default function BottomPlayer() {
 
         <Icon
           ml="5"
+          mr="5"
           as={FaForward}
           fontSize={15}
           onClick={() => console.log('click')}
@@ -53,16 +55,17 @@ export default function BottomPlayer() {
         />
 
         <Flex
-          minW="500"
+          minW={[100, 250, 500, 700, 900]}
           ml="auto"
           mr="auto"
           _hover={{ bg: 'red.800' }}
           justifyContent="center"
+          alignItems="center"
         >
           <Image
             mr="5"
             src={music.thumbnail}
-            h="65"
+            h={[0, 0, 50, 50, 65]}
             objectFit="cover"
             borderRadius="3px"
             alt={'Thumbnail of ' + music.title}
@@ -73,7 +76,7 @@ export default function BottomPlayer() {
             justifyContent="space-between"
             textAlign="left"
             padding="2"
-            maxW="450"
+            maxW={[100, 200, 450, 650, 850]}
           >
             <Text fontSize="lg" noOfLines={1}>
               {music.title}
@@ -91,7 +94,7 @@ export default function BottomPlayer() {
 
         <Icon
           ml="3"
-          mr="7"
+          mr="9"
           as={AiFillSound}
           fontSize={20}
           onClick={() => console.log('click')}

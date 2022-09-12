@@ -22,7 +22,6 @@ const useAuthValue = () => {
   const [user, setUser] = useState(false);
 
   useEffect(() => {
-    console.log('hi');
     const unsubscribe = onAuthStateChanged(auth, user => {
       setUser(user);
     });

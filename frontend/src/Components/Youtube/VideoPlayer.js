@@ -45,16 +45,40 @@ export default function VideoPlayer({ playlist }) {
       loop: 0,
       autoplay: 0,
       color: 'white',
+      enablejsapi: 1,
     },
   };
 
   const onReady = event => {
-    // event.target.pauseVideo();
+    const player = event.target;
+    player.setShuffle(true);
+    player.playVideoAt(0);
+    player.pauseVideo();
+    // player.loadPlaylist(playlist,index)
+    // event.target.hideVideoInfo();
+    // .pauseVideo();
+    // .playVideo()
+    // .nextVideo();
+    // .previousVideo()
+    // .getDuration()
+    // .getCurrentTime()
+    // .getVolume()
+    // .setVolme() // 0-100
+    // .hideVideoInfo()
+    // .isMuted()
+    // .setShuffle()
+    // .setLoop()
+    // .unMute()
+    // .mute()
+    // .getApiInterface()
+    // .playVideoAt(index:Number)
+    // .loadPlaylist(playlist:Array)
+    // .destroy()
   };
 
   return (
     <Box>
-      <YouTube videoId={id} opts={opts} onReady={onReady} />
+      <YouTube opts={opts} onReady={onReady} />
     </Box>
   );
 }
