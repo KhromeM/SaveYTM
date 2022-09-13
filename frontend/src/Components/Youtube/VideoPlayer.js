@@ -1,61 +1,51 @@
-import { Box, Text, Flex, Button, Heading, Image } from '@chakra-ui/react';
+// import { useState } from 'react';
+// const videoIdA = 'XxVg_s8xAms';
+// const videoIdB = '-DX3vJiqxm4';
 
-export default function VideoPlayer({ playlist }) {
-  playlist = playlist || [
-    'FlJqvq9Ua7I',
-    'tNideOigKaI',
-    'Ftl7-aQgywM',
-    'JwAjANmjajc',
-  ];
-  const id = playlist[0];
-  const opts = {
-    height: '390',
-    width: '640',
-    playerVars: {
-      // https://developers.google.com/youtube/player_parameters
-      autoplay: 1,
-      modestbranding: 1, //play on youtube logo bottom right
-      playlist: playlist.join(','),
-      iv_load_policy: 3,
-      fs: 0, //full screen button
-      controls: 1, // shows control buttons
-      loop: 0,
-      autoplay: 0,
-      color: 'white',
-      enablejsapi: 1,
-    },
-  };
+// function VideoPlayer() {
+//   const [videoId, setVideoId] = useState(videoIdA);
+//   const [player, setPlayer] = useState(null);
 
-  const onReady = event => {
-    const player = event.target;
-    player.setShuffle(true);
-    player.playVideoAt(0);
-    player.pauseVideo();
-    // player.loadPlaylist(playlist,index)
-    // event.target.hideVideoInfo();
-    // .pauseVideo();
-    // .playVideo()
-    // .nextVideo();
-    // .previousVideo()
-    // .getDuration()
-    // .getCurrentTime()
-    // .getVolume()
-    // .setVolme() // 0-100
-    // .hideVideoInfo()
-    // .isMuted()
-    // .setShuffle()
-    // .setLoop()
-    // .unMute()
-    // .mute()
-    // .getApiInterface()
-    // .playVideoAt(index:Number)
-    // .loadPlaylist(playlist:Array)
-    // .destroy()
-  };
+//   onReady = event => {
+//     console.log(
+//       `YouTube Player object for videoId: "${videoId}" has been saved .`
+//     );
+//     this.setState({
+//       player: event.target,
+//     });
+//   };
 
-  return (
-    <Box>
-      <YouTube opts={opts} onReady={onReady} />
-    </Box>
-  );
-}
+//   onPlay = event => {
+//     this.setState({
+//       title: this.state.player.getVideoData().title,
+//     });
+//   };
+
+//   onPlayVideo = () => {
+//     this.state.player.playVideo();
+//   };
+
+//   onPauseVideo = () => {
+//     this.state.player.pauseVideo();
+//   };
+
+//   onChangeVideo = () => {
+//     this.setState({
+//       videoId: this.state.videoId === videoIdA ? videoIdB : videoIdA,
+//     });
+//   };
+
+//   return (
+//     <div>
+//       <h1>{this.state.title}</h1>
+//       <YouTube
+//         videoId={this.state.videoId}
+//         onReady={this.onReady}
+//         onPlay={this.onPlay}
+//       />
+//       <button onClick={this.onPlayVideo}>Play</button>
+//       <button onClick={this.onPauseVideo}>Pause</button>
+//       <button onClick={this.onChangeVideo}>Change Video</button>
+//     </div>
+//   );
+// }
