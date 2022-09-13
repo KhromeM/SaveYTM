@@ -6,6 +6,7 @@ import {
   Image,
   Icon,
   Button,
+  Progress,
 } from '@chakra-ui/react';
 import { BsPlayFill, BsPauseFill } from 'react-icons/bs';
 import { FaForward, FaBackward } from 'react-icons/fa';
@@ -13,7 +14,7 @@ import { MdLoop } from 'react-icons/md';
 import { AiFillSound } from 'react-icons/ai';
 import Player from './Player';
 import YouTube from 'react-youtube';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const opts = {
   height: '0',
@@ -40,10 +41,13 @@ const music = {
 
 export default function BottomPlayer({ playlist }) {
   playlist = playlist || [
-    'JwAjANmjajc',
-    'FlJqvq9Ua7I',
-    'tNideOigKaI',
-    'Ftl7-aQgywM',
+    'GdzrrWA8e7A',
+    'NHMAx7AmK70',
+    'SZ1OTOzX1TE',
+    'jgpJVI3tDbY',
+    'KXKblsqEG3g',
+    '_zL0AAf-01I',
+    '2GjPQfdQfMY',
   ];
   const [player, setPlayer] = useState({ doesntExist: true });
 
@@ -60,7 +64,7 @@ export default function BottomPlayer({ playlist }) {
 }
 
 function BottomPlayerIcons({ player }) {
-  const [playing, setPlaying] = useState(false);
+  const [playing, setPlaying] = useState(null);
   const [loop, setLoop] = useState(false);
   const [volume, setVolume] = useState(100);
   const [duration, setDuration] = useState(0);
@@ -69,7 +73,11 @@ function BottomPlayerIcons({ player }) {
     player.nextVideo();
   };
   const previous = () => {
-    player.previousVideo();
+    if (player.getCurrentTime() > 30) {
+      player.playVideoAt(player.getPlaylistIndex());
+    } else {
+      player.previousVideo();
+    }
   };
 
   const handlePlay = () => {
@@ -103,6 +111,7 @@ function BottomPlayerIcons({ player }) {
           position="fixed"
           bottom="0"
         >
+          {playing !== null && <ProgressBar player={player} />}
           <Flex alignItems="center" minH="65" maxH="65">
             <Icon
               ml="7"
@@ -129,6 +138,8 @@ function BottomPlayerIcons({ player }) {
               cursor="pointer"
             />
 
+            {playing !== null && <ShowDuration player={player} />}
+
             <Flex
               minW={[100, 250, 500, 700, 900]}
               ml="auto"
@@ -138,7 +149,8 @@ function BottomPlayerIcons({ player }) {
               alignItems="center"
             >
               <Image
-                mr="5"
+                mr={(0, 0, 5, 5, 5)}
+                ml={(0, 0, 3, 5, 5)}
                 src={music.thumbnail}
                 h={[0, 0, 50, 50, 65]}
                 objectFit="cover"
@@ -181,3 +193,47 @@ function BottomPlayerIcons({ player }) {
     </>
   );
 }
+
+const ProgressBar = ({ player }) => {
+  const [time, setTime] = useState(0);
+
+  let dur = player.getDuration() || 3600;
+
+  setTimeout(() => {
+    let currentTime = player.getCurrentTime();
+    setTime(currentTime);
+  }, 1000);
+  console.log(Math.floor(time));
+
+  return (
+    <Progress value={(time * 100) / dur} size="xs" bg="white" minW="100vw" />
+  );
+};
+
+const ShowDuration = ({ player }) => {
+  const [time, setTime] = useState(0);
+
+  let dur = player.getDuration() || 3600;
+  setTimeout(() => {
+    let currentTime = player.getCurrentTime();
+
+    setTime(currentTime);
+  }, 1000);
+  let formattedTime;
+  let formattedDur;
+  if (dur >= 3600) {
+    formattedTime = new Date(time * 1000).toISOString().slice(11, 19);
+    formattedDur = new Date(dur * 1000).toISOString().slice(11, 19);
+  } else {
+    formattedTime = new Date(time * 1000).toISOString().slice(14, 19);
+    formattedDur = new Date(dur * 1000).toISOString().slice(14, 19);
+  }
+
+  return (
+    <Box minW="65" mx={[2, 2, 5, 10, 10]}>
+      <Text> {formattedTime}</Text>
+
+      <Text> {formattedDur}</Text>
+    </Box>
+  );
+};

@@ -19,6 +19,15 @@ let myTheme = extendTheme({
       gray: '#212121',
     },
   },
+  components: {
+    Progress: {
+      baseStyle: {
+        filledTrack: {
+          bg: 'red',
+        },
+      },
+    },
+  },
 });
 
 export default myTheme;
