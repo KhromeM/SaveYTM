@@ -6,7 +6,9 @@ import {
   Image,
   Icon,
   Button,
-  Progress,
+  Slider,
+  SliderTrack,
+  SliderFilledTrack,
 } from '@chakra-ui/react';
 import { BsPlayFill, BsPauseFill } from 'react-icons/bs';
 import { FaForward, FaBackward } from 'react-icons/fa';
@@ -15,6 +17,8 @@ import { AiFillSound } from 'react-icons/ai';
 import Player from './Player';
 import YouTube from 'react-youtube';
 import { useState, useEffect } from 'react';
+import { VideoSeekSlider } from 'react-video-seek-slider';
+import 'react-video-seek-slider/styles.css';
 
 const opts = {
   height: '0',
@@ -74,7 +78,8 @@ function BottomPlayerIcons({ player }) {
   };
   const previous = () => {
     if (player.getCurrentTime() > 30) {
-      player.playVideoAt(player.getPlaylistIndex());
+      // player.playVideoAt(player.getPlaylistIndex());
+      player.seekTo(0, true);
     } else {
       player.previousVideo();
     }
@@ -107,11 +112,11 @@ function BottomPlayerIcons({ player }) {
           minW="100vw"
           bg="youtube.gray"
           minH="65"
-          maxH="65"
+          maxH="80"
           position="fixed"
           bottom="0"
         >
-          {playing !== null && <ProgressBar player={player} />}
+          {playing !== null && <ProgressBar player={player} loop={loop} />}
           <Flex alignItems="center" minH="65" maxH="65">
             <Icon
               ml="7"
@@ -152,7 +157,7 @@ function BottomPlayerIcons({ player }) {
                 mr={(0, 0, 5, 5, 5)}
                 ml={(0, 0, 3, 5, 5)}
                 src={music.thumbnail}
-                h={[0, 0, 50, 50, 65]}
+                h={[0, 0, 50, 50, 58]}
                 objectFit="cover"
                 borderRadius="3px"
                 alt={'Thumbnail of ' + music.title}
@@ -175,7 +180,8 @@ function BottomPlayerIcons({ player }) {
             <Icon
               as={MdLoop}
               fontSize={25}
-              onClick={() => console.log('click')}
+              color={loop ? 'red' : 'white'}
+              onClick={() => setLoop(!loop)}
               cursor="pointer"
             />
 
@@ -194,19 +200,35 @@ function BottomPlayerIcons({ player }) {
   );
 }
 
-const ProgressBar = ({ player }) => {
+const ProgressBar = ({ player, loop }) => {
   const [time, setTime] = useState(0);
 
   let dur = player.getDuration() || 3600;
 
+  if (loop && time >= dur - 1) {
+    player.seekTo(0, true);
+  }
+
   setTimeout(() => {
-    let currentTime = player.getCurrentTime();
-    setTime(currentTime);
+    setTime(player.getCurrentTime());
   }, 1000);
-  console.log(Math.floor(time));
+
+  const setCurrentTime = percentage => {
+    const newTime = (percentage * dur) / 100;
+    console.log(percentage);
+    player.seekTo(newTime, true);
+    setTime(newTime);
+  };
+  // console.log(time);
 
   return (
-    <Progress value={(time * 100) / dur} size="xs" bg="white" minW="100vw" />
+    <Box minH="5" maxW="95%" m="auto" maxH="5" mt="0" mb="1">
+      <Slider onChange={setCurrentTime} value={(time * 100) / dur}>
+        <SliderTrack>
+          <SliderFilledTrack bg="red" br="1" p="0" />
+        </SliderTrack>
+      </Slider>
+    </Box>
   );
 };
 
@@ -215,11 +237,10 @@ const ShowDuration = ({ player }) => {
 
   let dur = player.getDuration() || 3600;
   setTimeout(() => {
-    let currentTime = player.getCurrentTime();
-
-    setTime(currentTime);
+    setTime(player.getCurrentTime());
   }, 1000);
   let formattedTime;
+
   let formattedDur;
   if (dur >= 3600) {
     formattedTime = new Date(time * 1000).toISOString().slice(11, 19);
