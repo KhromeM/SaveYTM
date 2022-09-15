@@ -25,12 +25,9 @@ const opts = {
   width: '0',
   playerVars: {
     // https://developers.google.com/youtube/player_parameters
-    autoplay: 0,
-    modestbranding: 1, //play on youtube logo bottom right
     iv_load_policy: 3,
     fs: 0, //full screen button
     controls: 1, // shows control buttons
-    loop: 0,
     color: 'white',
     enablejsapi: 1,
   },
@@ -72,6 +69,20 @@ function BottomPlayerIcons({ player }) {
   const [loop, setLoop] = useState(false);
   const [volume, setVolume] = useState(100);
   const [duration, setDuration] = useState(0);
+  const [time, setTime] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (playing) {
+        setTime(player.getCurrentTime());
+      }
+    }, 1000);
+    return () => {
+      console.log('Cleared Interval');
+      clearInterval(interval);
+    };
+  }, [playing]);
+  console.log(time);
 
   const next = () => {
     player.nextVideo();
@@ -116,7 +127,14 @@ function BottomPlayerIcons({ player }) {
           position="fixed"
           bottom="0"
         >
-          {playing !== null && <ProgressBar player={player} loop={loop} />}
+          {playing !== null && (
+            <ProgressBar
+              player={player}
+              loop={loop}
+              time={time}
+              setTime={setTime}
+            />
+          )}
           <Flex alignItems="center" minH="65" maxH="65">
             <Icon
               ml="7"
@@ -143,7 +161,7 @@ function BottomPlayerIcons({ player }) {
               cursor="pointer"
             />
 
-            {playing !== null && <ShowDuration player={player} />}
+            {playing !== null && <ShowDuration player={player} time={time} />}
 
             <Flex
               minW={[100, 250, 500, 700, 900]}
@@ -200,26 +218,29 @@ function BottomPlayerIcons({ player }) {
   );
 }
 
-const ProgressBar = ({ player, loop }) => {
-  const [time, setTime] = useState(0);
-
+const ProgressBar = ({ player, loop, time, setTime }) => {
   let dur = player.getDuration() || 3600;
-
   if (loop && time >= dur - 1) {
     player.seekTo(0, true);
   }
-
-  setTimeout(() => {
-    setTime(player.getCurrentTime());
-  }, 1000);
-
   const setCurrentTime = percentage => {
     const newTime = (percentage * dur) / 100;
-    console.log(percentage);
     player.seekTo(newTime, true);
-    setTime(newTime);
   };
-  // console.log(time);
+  const setCurrentTime2 = newTime => {
+    player.seekTo(newTime / 1000, true);
+    player.setTime(newTime / 1000);
+  };
+
+  const formatTime = t => {
+    let formatted;
+    if (t >= 3600) {
+      formatted = new Date(dur * 1000).toISOString().slice(11, 19);
+    } else {
+      formatted = new Date(dur * 1000).toISOString().slice(14, 19);
+    }
+    return formatted;
+  };
 
   return (
     <Box minH="5" maxW="95%" m="auto" maxH="5" mt="0" mb="1">
@@ -230,17 +251,21 @@ const ProgressBar = ({ player, loop }) => {
       </Slider>
     </Box>
   );
+  // return (
+  //   <Box minH="5" mx="auto" maxW="95vw">
+  //     <VideoSeekSlider
+  //       max={dur * 1000}
+  //       currentTime={time * 1000}
+  //       onChange={setCurrentTime2}
+  //       secondsPrefix="00:"
+  //     />
+  //   </Box>
+  // );
 };
 
-const ShowDuration = ({ player }) => {
-  const [time, setTime] = useState(0);
-
+const ShowDuration = ({ player, time, rerender }) => {
   let dur = player.getDuration() || 3600;
-  setTimeout(() => {
-    setTime(player.getCurrentTime());
-  }, 1000);
   let formattedTime;
-
   let formattedDur;
   if (dur >= 3600) {
     formattedTime = new Date(time * 1000).toISOString().slice(11, 19);
