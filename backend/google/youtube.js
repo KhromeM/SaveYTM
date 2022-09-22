@@ -8,6 +8,7 @@ const {
 	setDeleted,
 	getDeleted,
 } = require("../firebase/db.js");
+
 const getVideosHelper = (client, playlistId, pageToken) => {
 	const obj = {
 		auth: client,
@@ -121,12 +122,13 @@ const getPlaylists = (user) => {
 
 const updateUserPlaylists = async (user) => {
 	// get all the users playlists
-	user.playlists = await getPlaylists(user);
+	const playlists = await getPlaylists(user);
+	user.playlists = playlists;
 	setUser(user);
 
 	// get all the videos in the playlist
-	user.playlists.forEach(async (playlist) => {
-		const videos = await getVideos(playlist);
+	playlists.forEach(async (playlistObj) => {
+		const videos = await getVideos(user, playlistObj);
 
 		// diff it //////////////////////////////
 
@@ -137,7 +139,8 @@ const updateUserPlaylists = async (user) => {
 module.exports = { getPlaylists, getVideos, updateUserPlaylists };
 
 // const user = {
-// 	credentials: {
+// 	uid: "zduQmbmF2TU8uH8YhMMuJglrsVP2",
+// 	token: {
 // 		access_token:
 // 			"ya29.a0Aa4xrXOIQVLksdXKm5VrL8NR0trKi_W5tpXaBdtg4rMI5or_98g-wpk0940ir0WQNyqE0uGxJRdhwSZ1BG77xZNfra3zSB6uexLjuIhmLR1M6bGSXTKzNRgiOUxw_ouC2LVLBk5Tuq89wj0qiu4GKQShPNBEaCgYKATASARESFQEjDvL9zmZQhqoVvPKqcpJtCSOC4Q0163",
 // 		refresh_token:
@@ -154,8 +157,7 @@ module.exports = { getPlaylists, getVideos, updateUserPlaylists };
 
 // const func = async () => {
 // 	try {
-// 		const videos = await getPlaylists(user, playlistObj);
-// 		console.log(videos.length);
+// 		await updateUserPlaylists(user);
 // 	} catch (err) {
 // 		console.log(err);
 // 	}

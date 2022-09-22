@@ -1,6 +1,8 @@
 import { Box, Text, Flex, Button, Heading, Image } from '@chakra-ui/react';
 import { Menu, MenuButton, MenuList, MenuItem } from '@chakra-ui/react';
-import { useAuth } from '../Utils/auth';
+import { useAuth } from '../Utils/auth.js';
+import { getOAuthLink } from '../Utils/server.js';
+
 export default function NavBar() {
   return (
     <Flex
@@ -30,6 +32,12 @@ const Auth = () => {
   const handleAuth = () => {
     user ? logout() : login();
   };
+  const handleOAuth = async () => {
+    let idToken = await user.getIdToken(false);
+    const { authURL } = await getOAuthLink(idToken);
+    window.location.href = authURL;
+  };
+
   return (
     <Box>
       {user ? (
@@ -43,6 +51,8 @@ const Auth = () => {
           >
             {/* <MenuItem>Account</MenuItem> */}
             {/* <MenuItem>Settings</MenuItem>  */}
+            <MenuItem onClick={handleOAuth}>Give Access</MenuItem>
+
             <MenuItem onClick={handleAuth}>Logout</MenuItem>
           </MenuList>
         </Menu>
