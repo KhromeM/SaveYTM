@@ -27,3 +27,17 @@ export const getOAuthLink = async idToken => {
   const response = await res.json();
   return response;
 };
+
+export const update = async idToken => {
+  const body = JSON.stringify({ idToken });
+  const path = serverURL + '/update';
+  const res = await fetch(path, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: body,
+  });
+  const response = await res.json();
+  return response;
+};

@@ -52,6 +52,22 @@ app.post("/giveoauth", async (req, res) => {
 	}
 });
 
+app.post("/update", async (req, res) => {
+	const user = req.body._user;
+	try {
+		const userDB = await getUser(user.user_id);
+
+		res.json({ status: "success", message: "OAuth credentials saved." });
+		res.end();
+
+		updateUserPlaylists(userDB);
+	} catch (err) {
+		console.error(err);
+		res.json({ status: "fail", message: "Invalid OAuth code." });
+		res.end();
+	}
+});
+
 app.post("/getplaylists", (req, res) => {
 	const user = req.body._user;
 	// req.body = { uid: 'uid', AuthToken: 'token'}

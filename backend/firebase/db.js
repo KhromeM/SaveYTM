@@ -29,7 +29,6 @@ const getPlaylist = async (playlistObj) => {
 	const ref = playlists.doc(playlistId);
 	const playlist = await ref.get();
 	if (!playlist.exists) {
-		console.error("Playlist does not exist!", playlistObj);
 		return {};
 	} else {
 		return playlist.data();

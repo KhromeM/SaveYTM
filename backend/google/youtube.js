@@ -129,11 +129,43 @@ const updateUserPlaylists = async (user) => {
 	// get all the videos in the playlist
 	playlists.forEach(async (playlistObj) => {
 		const videos = await getVideos(user, playlistObj);
-
-		// diff it //////////////////////////////
-
-		setPlaylist(videos);
+		const diffed = await diff(videos);
+		setPlaylist(diffed);
 	});
+};
+
+const diff = async (playlist) => {
+	// remove the deleted and private videos
+	playlist.videos = playlist.videos.filter((video) => {
+		return video.title !== "Private video" && video.title !== "Deleted video";
+	});
+
+	// get playlist from DB so we can compare
+	const playlistDB = await getPlaylist(playlist.info);
+	playlistDB.info = playlist.info;
+	playlistDB.videos = playlistDB.videos || [];
+
+	// mark deleted videos
+	const set = new Set();
+	playlist.videos.forEach((vid) => set.add(vid.videoId));
+
+	playlistDB.videos.forEach((vid) => {
+		if (!set.has(vid.videoId)) {
+			vid.deleted = true;
+		}
+	});
+
+	// add new videos
+	const dbSet = new Set();
+	playlistDB.videos.forEach((vid) => dbSet.add(vid.videoId));
+
+	playlist.videos.forEach((vid) => {
+		if (!dbSet.has(vid.videoId)) {
+			playlistDB.videos.push(vid);
+		}
+	});
+
+	return playlistDB;
 };
 
 module.exports = { getPlaylists, getVideos, updateUserPlaylists };
