@@ -29,6 +29,7 @@ export default function NavBar() {
 
 const Auth = () => {
   const { user, login, logout } = useAuth();
+
   const handleAuth = () => {
     user ? logout() : login();
   };

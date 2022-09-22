@@ -68,7 +68,6 @@ function BottomPlayerIcons({ player }) {
   const [playing, setPlaying] = useState(null);
   const [loop, setLoop] = useState(false);
   const [volume, setVolume] = useState(100);
-  const [duration, setDuration] = useState(0);
   const [time, setTime] = useState(0);
 
   useEffect(() => {
@@ -76,13 +75,11 @@ function BottomPlayerIcons({ player }) {
       if (playing) {
         setTime(player.getCurrentTime());
       }
-    }, 1000);
+    }, 300);
     return () => {
-      console.log('Cleared Interval');
       clearInterval(interval);
     };
   }, [playing]);
-  console.log(time);
 
   const next = () => {
     player.nextVideo();

@@ -14,11 +14,11 @@ const authContext = createContext();
 export const useAuth = () => useContext(authContext);
 
 export const AuthProvider = ({ children }) => {
-  const auth = useAuthValue();
+  const auth = useGetAuth();
   return <authContext.Provider value={auth}>{children}</authContext.Provider>;
 };
 
-const useAuthValue = () => {
+const useGetAuth = () => {
   const [user, setUser] = useState(false);
 
   useEffect(() => {
