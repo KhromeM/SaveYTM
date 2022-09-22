@@ -5,8 +5,6 @@ const {
 	getUser,
 	setPlaylist,
 	getPlaylist,
-	setDeleted,
-	getDeleted,
 } = require("../firebase/db.js");
 
 const getVideosHelper = (client, playlistId, pageToken) => {
@@ -169,29 +167,3 @@ const diff = async (playlist) => {
 };
 
 module.exports = { getPlaylists, getVideos, updateUserPlaylists };
-
-// const user = {
-// 	uid: "zduQmbmF2TU8uH8YhMMuJglrsVP2",
-// 	token: {
-// 		access_token:
-// 			"ya29.a0Aa4xrXOIQVLksdXKm5VrL8NR0trKi_W5tpXaBdtg4rMI5or_98g-wpk0940ir0WQNyqE0uGxJRdhwSZ1BG77xZNfra3zSB6uexLjuIhmLR1M6bGSXTKzNRgiOUxw_ouC2LVLBk5Tuq89wj0qiu4GKQShPNBEaCgYKATASARESFQEjDvL9zmZQhqoVvPKqcpJtCSOC4Q0163",
-// 		refresh_token:
-// 			"1//0dNhEIzxYMpSLCgYIARAAGA0SNwF-L9Ir5R7LxlnU4n3SzfI9j1cdoG3LlXbH1OBs8XqdwmrLaQZNvbf4ai91nccbcBEpJNxr3B0",
-// 		scope: "https://www.googleapis.com/auth/youtube.readonly",
-// 		token_type: "Bearer",
-// 		expiry_date: 1663783840605,
-// 	},
-// };
-// const playlistObj = {
-// 	playlistId: "PLJdEWbB6MKlxyw8-i-sgSA93oH_rvGCP3",
-// 	PlaylistTitle: "Music 7",
-// };
-
-// const func = async () => {
-// 	try {
-// 		await updateUserPlaylists(user);
-// 	} catch (err) {
-// 		console.log(err);
-// 	}
-// };
-// func();

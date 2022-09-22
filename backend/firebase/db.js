@@ -1,7 +1,6 @@
 const { db } = require("./firebase");
 const users = db.collection("users");
 const playlists = db.collection("playlists");
-const deleted = db.collection("deleted");
 
 const setUser = async (data) => {
 	const { uid } = data;
@@ -35,26 +34,9 @@ const getPlaylist = async (playlistObj) => {
 	}
 };
 
-const getDeleted = async (uid) => {
-	const ref = deleted.doc(uid);
-	const deletedList = await ref.get();
-	if (!deletedList.exists) {
-		return {};
-	} else {
-		return deletedList.data();
-	}
-};
-
-const setDeleted = async (uid, list) => {
-	const ref = deleted.doc(uid);
-	return await ref.set(list);
-};
-
 module.exports = {
 	setUser,
 	getUser,
 	setPlaylist,
 	getPlaylist,
-	setDeleted,
-	getDeleted,
 };
