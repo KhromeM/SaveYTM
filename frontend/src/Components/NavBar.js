@@ -30,9 +30,6 @@ const Auth = () => {
   const handleAuth = () => {
     user ? logout() : login();
   };
-  if (user) {
-    user.getIdToken(false).then(r => console.log(r));
-  }
   return (
     <Box>
       {user ? (

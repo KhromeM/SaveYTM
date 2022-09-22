@@ -6,14 +6,13 @@ const deleted = db.collection("deleted");
 const setUser = async (data) => {
 	const { uid } = data;
 	const ref = users.doc(uid);
-	await ref.set(data);
+	return await ref.set(data);
 };
 
 const getUser = async (uid) => {
 	const ref = users.doc(uid);
 	const user = await ref.get();
 	if (!user.exists) {
-		console.error("User does not exist!");
 		return {};
 	}
 	return user.data();
@@ -22,7 +21,7 @@ const getUser = async (uid) => {
 const setPlaylist = async (data) => {
 	const { playlistId } = data.info;
 	const ref = playlists.doc(playlistId);
-	await ref.set(data);
+	return await ref.set(data);
 };
 
 const getPlaylist = async (playlistObj) => {
@@ -49,5 +48,14 @@ const getDeleted = async (uid) => {
 
 const setDeleted = async (uid, list) => {
 	const ref = deleted.doc(uid);
-	await ref.set(list);
+	return await ref.set(list);
+};
+
+module.exports = {
+	setUser,
+	getUser,
+	setPlaylist,
+	getPlaylist,
+	setDeleted,
+	getDeleted,
 };

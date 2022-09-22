@@ -1,14 +1,19 @@
 const app = require("express")();
+const cors = require("cors");
 const { json } = require("express");
 const cookieparser = require("cookie-parser");
 const { verifyUser } = require("./firebase/firebase");
-const { getAuthURL, getToken } = require("./google/oauth");
-const CONFIG = require("./config");
+const { setUser, getUser } = require("./firebase/db.js");
+const { getAuthURL, getToken } = require("./google/oauth.js");
+const { updateUserPlaylists } = require("./google/youtube.js");
+const CONFIG = require("./config.js");
 
+app.use(cors());
 app.use(json());
 app.use(cookieparser());
 
 app.use(async (req, res, next) => {
+	console.log("Got Request!");
 	req.body._user = await verifyUser(req.body.idToken);
 
 	if (!req.body._user.uid) {
@@ -26,17 +31,25 @@ app.post("/getoauthlink", (req, res) => {
 app.post("/giveoauth", async (req, res) => {
 	const user = req.body._user;
 	const code = req.body.code;
-	let message = {};
 	try {
 		const token = await getToken(code);
-		message = { status: "success", message: "OAuth credentials saved." };
-		// save user
+
+		// create the user in db
+		const userDB = await getUser(user.user_id);
+		userDB.token = token;
+		userDB.uid = user.user_id;
+		setUser(userDB);
+
+		// send response (use onsnapshot on frontend)
+		res.json({ status: "success", message: "OAuth credentials saved." });
+		res.end();
+
+		updateUserPlaylists(userDB);
 	} catch (err) {
 		console.error(err);
-		message = { status: "fail", message: "Invalid OAuth code." };
+		res.json({ status: "fail", message: "Invalid OAuth code." });
+		res.end();
 	}
-	res.json(message);
-	res.end();
 });
 
 app.post("/getplaylists", (req, res) => {

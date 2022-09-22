@@ -1,6 +1,13 @@
 const { getClient } = require("./oauth");
 const google = require("googleapis").google;
-
+const {
+	setUser,
+	getUser,
+	setPlaylist,
+	getPlaylist,
+	setDeleted,
+	getDeleted,
+} = require("../firebase/db.js");
 const getVideosHelper = (client, playlistId, pageToken) => {
 	const obj = {
 		auth: client,
@@ -43,7 +50,7 @@ const trimVideoInfo = (data, playlistObj) => {
 const getVideos = (user, playlistObj) => {
 	const { playlistId } = playlistObj;
 	const client = getClient();
-	client.credentials = user.credentials;
+	client.credentials = user.token;
 	let playlistVideos = [];
 	let pageToken = null;
 	return new Promise(async (resolve) => {
@@ -86,9 +93,9 @@ const trimPlaylistInfo = (data) => {
 			i.snippet.thumbnails.default || { url: "null" };
 
 		playlists.push({
-			title: i.snippet.title,
+			playlistTitle: i.snippet.title,
 			thumbnail,
-			id: i.id,
+			playlistId: i.id,
 			publishedAt: i.snippet.publishedAt,
 			description: i.snippet.description,
 		});
@@ -98,7 +105,7 @@ const trimPlaylistInfo = (data) => {
 
 const getPlaylists = (user) => {
 	const client = getClient();
-	client.credentials = user.credentials;
+	client.credentials = user.token;
 	let playlists = [];
 	let pageToken = null;
 	return new Promise(async (resolve) => {
@@ -112,7 +119,22 @@ const getPlaylists = (user) => {
 	});
 };
 
-module.exports = { getPlaylists, getVideos };
+const updateUserPlaylists = async (user) => {
+	// get all the users playlists
+	user.playlists = await getPlaylists(user);
+	setUser(user);
+
+	// get all the videos in the playlist
+	user.playlists.forEach(async (playlist) => {
+		const videos = await getVideos(playlist);
+
+		// diff it //////////////////////////////
+
+		setPlaylist(videos);
+	});
+};
+
+module.exports = { getPlaylists, getVideos, updateUserPlaylists };
 
 // const user = {
 // 	credentials: {
