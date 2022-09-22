@@ -1,8 +1,19 @@
 import { createContext, useContext, useState, useEffect } from 'react';
-import { getFirestore, doc, getDoc, onSnapshot } from 'firebase/firestore.js';
+import {
+  getFirestore,
+  doc,
+  getDoc,
+  onSnapshot,
+  query,
+  where,
+  collection,
+} from 'firebase/firestore';
 import app from './firebase.js';
 import { useAuth } from './auth.js';
+
 const db = getFirestore(app);
+const usersRef = collection(db, 'users');
+const playlistsRef = collection(db, 'playlists');
 
 const dataContext = createContext();
 export const useData = () => useContext(dataContext);
@@ -14,14 +25,22 @@ export const DataProvider = ({ children }) => {
 
 const useGetData = () => {
   const { user } = useAuth();
-  const [data, setData] = useState();
+  const [userData, setUserData] = useState(false);
+
+  const getSnapshot = (collection, document, setter) => () =>
+    onSnapshot(doc(db, collection, document), doc => {
+      setter(doc.data());
+    });
 
   useEffect(() => {
-    const unSub = onSnapshot(doc(db, 'user', user.uid), doc => {
-      setData(doc.data());
-    });
-    return () => unSub();
+    const func = getSnapshot('users', user.uid, setUserData);
+    if (user) {
+      const unSub = func();
+      return () => {
+        unSub();
+      };
+    }
   }, [user]);
 
-  return data;
+  return { userData, getSnapshot };
 };

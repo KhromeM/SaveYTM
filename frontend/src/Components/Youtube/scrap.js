@@ -25,6 +25,7 @@ const onReady = event => {
   // .loadPlaylist(playlist:Array)
   // .destroy()
   // .getPlayerState()
+  // .getPlaylistIndex() gets the index of the playing video
 };
 const opts = {
   height: '100',

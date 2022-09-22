@@ -19,6 +19,7 @@ import YouTube from 'react-youtube';
 import { useState, useEffect } from 'react';
 import { VideoSeekSlider } from 'react-video-seek-slider';
 import 'react-video-seek-slider/styles.css';
+import { usePlayer } from '../../Utils/player';
 
 const opts = {
   height: '0',
@@ -40,35 +41,45 @@ const music = {
   artist: 'FiveSix',
 };
 
-export default function BottomPlayer({ playlist }) {
-  playlist = playlist || [
-    'GdzrrWA8e7A',
-    'NHMAx7AmK70',
-    'SZ1OTOzX1TE',
-    'jgpJVI3tDbY',
-    'KXKblsqEG3g',
-    '_zL0AAf-01I',
-    '2GjPQfdQfMY',
-  ];
+export default function BottomPlayer() {
+  const { playerStatus } = usePlayer();
   const [player, setPlayer] = useState({ doesntExist: true });
+  const [index, setIndex] = useState(0);
+  const videoIds = playerStatus.playlist.map(video => video.videoId);
 
   const onReady = event => {
     setPlayer(event.target);
-    event.target.loadPlaylist(playlist);
+    event.target.loadPlaylist(videoIds);
   };
+  const onStateChange = () => {
+    setIndex(player.getPlaylistIndex());
+  };
+
+  useEffect(() => {
+    if (!player.doesntExist) {
+      player.loadPlaylist(videoIds);
+    }
+  }, [playerStatus]);
+
+  if (!playerStatus.active) {
+    return <></>;
+  }
   return (
     <div>
-      <YouTube onReady={onReady} opts={opts} />
-      <BottomPlayerIcons player={player} />
+      <YouTube onStateChange={onStateChange} onReady={onReady} opts={opts} />
+      <BottomPlayerIcons player={player} index={index} />
     </div>
   );
 }
 
-function BottomPlayerIcons({ player }) {
+function BottomPlayerIcons({ player, index }) {
   const [playing, setPlaying] = useState(null);
   const [loop, setLoop] = useState(false);
   const [volume, setVolume] = useState(100);
   const [time, setTime] = useState(0);
+  const { playerStatus } = usePlayer();
+
+  const vid = playerStatus.playlist[index];
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -86,7 +97,6 @@ function BottomPlayerIcons({ player }) {
   };
   const previous = () => {
     if (player.getCurrentTime() > 30) {
-      // player.playVideoAt(player.getPlaylistIndex());
       player.seekTo(0, true);
     } else {
       player.previousVideo();
@@ -171,11 +181,11 @@ function BottomPlayerIcons({ player }) {
               <Image
                 mr={(0, 0, 5, 5, 5)}
                 ml={(0, 0, 3, 5, 5)}
-                src={music.thumbnail}
+                src={vid.thumbnail}
                 h={[0, 0, 50, 50, 58]}
                 objectFit="cover"
                 borderRadius="3px"
-                alt={'Thumbnail of ' + music.title}
+                alt={'Thumbnail of ' + vid.title}
               />
               <Flex
                 direction="column"
@@ -186,9 +196,9 @@ function BottomPlayerIcons({ player }) {
                 maxW={[100, 200, 450, 650, 850]}
               >
                 <Text fontSize="lg" noOfLines={1}>
-                  {music.title}
+                  {vid.title}
                 </Text>
-                <Text fontSize="sm"> {music.artist} </Text>
+                <Text fontSize="sm"> {vid.channel} </Text>
               </Flex>
             </Flex>
 
@@ -224,20 +234,6 @@ const ProgressBar = ({ player, loop, time, setTime }) => {
     const newTime = (percentage * dur) / 100;
     player.seekTo(newTime, true);
   };
-  const setCurrentTime2 = newTime => {
-    player.seekTo(newTime / 1000, true);
-    player.setTime(newTime / 1000);
-  };
-
-  const formatTime = t => {
-    let formatted;
-    if (t >= 3600) {
-      formatted = new Date(dur * 1000).toISOString().slice(11, 19);
-    } else {
-      formatted = new Date(dur * 1000).toISOString().slice(14, 19);
-    }
-    return formatted;
-  };
 
   return (
     <Box minH="5" maxW="95%" m="auto" maxH="5" mt="0" mb="1">
@@ -248,16 +244,6 @@ const ProgressBar = ({ player, loop, time, setTime }) => {
       </Slider>
     </Box>
   );
-  // return (
-  //   <Box minH="5" mx="auto" maxW="95vw">
-  //     <VideoSeekSlider
-  //       max={dur * 1000}
-  //       currentTime={time * 1000}
-  //       onChange={setCurrentTime2}
-  //       secondsPrefix="00:"
-  //     />
-  //   </Box>
-  // );
 };
 
 const ShowDuration = ({ player, time, rerender }) => {

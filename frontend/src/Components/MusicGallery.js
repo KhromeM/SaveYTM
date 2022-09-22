@@ -1,7 +1,9 @@
 import { Box, Text, Flex, Button, Heading, Image } from '@chakra-ui/react';
 import MusicBox from './MusicBox';
+import { useState } from 'react';
 
-export default function MusicGallery({ musicList }) {
+export default function MusicGallery() {
+  const [musicList, setMusicList] = useState([]);
   // feed MusicBox components a list of 4 music objects
   const musicBoxes = [];
   let tempHolder = [];
