@@ -56,6 +56,11 @@ app.post("/update", async (req, res) => {
 	const user = req.body._user;
 	try {
 		const userDB = await getUser(user.user_id);
+		if (!userDB.token) {
+			res.json({ status: "fail", message: "Need access to youtube" });
+			res.end();
+			return;
+		}
 
 		res.json({ status: "success", message: "OAuth credentials saved." });
 		res.end();
