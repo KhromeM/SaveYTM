@@ -73,7 +73,7 @@ export default function BottomPlayer() {
 }
 
 function BottomPlayerIcons({ player, index }) {
-  const [playing, setPlaying] = useState(false);
+  const [playing, setPlaying] = useState(null);
   const [loop, setLoop] = useState(false);
   const [volume, setVolume] = useState(100);
   const [time, setTime] = useState(0);
