@@ -174,35 +174,37 @@ function BottomPlayerIcons({ player, index, playControl }) {
 
             <ShowDuration player={player} time={time} />
 
-            <Flex
-              minW={[100, 100, 500, 700, 900]}
-              ml="auto"
-              mr="auto"
-              _hover={{ bg: 'red.800' }}
-              justifyContent="center"
-              alignItems="center"
-            >
-              <Image
-                src={vid.thumbnail}
-                h={[0, 0, 50, 50, 58]}
-                objectFit="cover"
-                borderRadius="3px"
-                alt={'Thumbnail of ' + vid.title}
-              />
+            {vid && (
               <Flex
-                direction="column"
-                alignItems="flex-start"
-                justifyContent="space-between"
-                textAlign="left"
-                mx={['10px', '10px', '20px']}
-                maxW={[100, 200, 450, 650, 850]}
+                minW={[100, 100, 500, 700, 900]}
+                ml="auto"
+                mr="auto"
+                _hover={{ bg: 'red.800' }}
+                justifyContent="center"
+                alignItems="center"
               >
-                <Text fontSize="lg" noOfLines={1}>
-                  {vid.title}
-                </Text>
-                <Text fontSize="sm"> {vid.channel} </Text>
+                <Image
+                  src={vid.thumbnail}
+                  h={[0, 0, 50, 50, 58]}
+                  objectFit="cover"
+                  borderRadius="3px"
+                  alt={'Thumbnail of ' + vid.title}
+                />
+                <Flex
+                  direction="column"
+                  alignItems="flex-start"
+                  justifyContent="space-between"
+                  textAlign="left"
+                  mx={['10px', '10px', '20px']}
+                  maxW={[100, 200, 450, 650, 850]}
+                >
+                  <Text fontSize="lg" noOfLines={1}>
+                    {vid.title}
+                  </Text>
+                  <Text fontSize="sm"> {vid.channel} </Text>
+                </Flex>
               </Flex>
-            </Flex>
+            )}
 
             <Icon
               ml="3"
