@@ -46,13 +46,20 @@ export default function BottomPlayer() {
   const [player, setPlayer] = useState({ doesntExist: true });
   const [index, setIndex] = useState(0);
   const videoIds = playerStatus.playlist.map(video => video.videoId);
+  const [playing, setPlaying] = useState(true);
 
   const onReady = event => {
     setPlayer(event.target);
     event.target.loadPlaylist(videoIds);
   };
-  const onStateChange = () => {
+  const onStateChange = ({ data }) => {
     setIndex(player.getPlaylistIndex());
+    if (data === 2) {
+      setPlaying(false);
+    }
+    if (data === 1) {
+      setPlaying(true);
+    }
   };
 
   useEffect(() => {
@@ -67,13 +74,17 @@ export default function BottomPlayer() {
   return (
     <div>
       <YouTube onStateChange={onStateChange} onReady={onReady} opts={opts} />
-      <BottomPlayerIcons player={player} index={index} />
+      <BottomPlayerIcons
+        player={player}
+        index={index}
+        playControl={{ playing, setPlaying }}
+      />
     </div>
   );
 }
 
-function BottomPlayerIcons({ player, index }) {
-  const [playing, setPlaying] = useState(null);
+function BottomPlayerIcons({ player, index, playControl }) {
+  const { playing, setPlaying } = playControl;
   const [loop, setLoop] = useState(false);
   const [volume, setVolume] = useState(100);
   const [time, setTime] = useState(0);
@@ -83,14 +94,14 @@ function BottomPlayerIcons({ player, index }) {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      if (playing) {
+      if (playing && player.getCurrentTime) {
         setTime(player.getCurrentTime());
       }
     }, 300);
     return () => {
       clearInterval(interval);
     };
-  }, [playing]);
+  }, [playing, player]);
 
   const next = () => {
     player.nextVideo();
@@ -134,14 +145,8 @@ function BottomPlayerIcons({ player, index }) {
           position="fixed"
           bottom="0"
         >
-          {playing !== null && (
-            <ProgressBar
-              player={player}
-              loop={loop}
-              time={time}
-              setTime={setTime}
-            />
-          )}
+          <ProgressBar player={player} loop={loop} time={time} />
+
           <Flex alignItems="center" minH="65" maxH="65">
             <Icon
               ml="7"
@@ -168,7 +173,7 @@ function BottomPlayerIcons({ player, index }) {
               cursor="pointer"
             />
 
-            {playing !== null && <ShowDuration player={player} time={time} />}
+            <ShowDuration player={player} time={time} />
 
             <Flex
               minW={[100, 250, 500, 700, 900]}
@@ -225,7 +230,8 @@ function BottomPlayerIcons({ player, index }) {
   );
 }
 
-const ProgressBar = ({ player, loop, time, setTime }) => {
+const ProgressBar = ({ player, loop, time }) => {
+  time = time || 0;
   let dur = player.getDuration() || 3600;
   if (loop && time >= dur - 1) {
     player.seekTo(0, true);
@@ -246,7 +252,8 @@ const ProgressBar = ({ player, loop, time, setTime }) => {
   );
 };
 
-const ShowDuration = ({ player, time, rerender }) => {
+const ShowDuration = ({ player, time }) => {
+  time = time || 0;
   let dur = player.getDuration() || 3600;
   let formattedTime;
   let formattedDur;

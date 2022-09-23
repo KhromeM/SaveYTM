@@ -23,8 +23,8 @@ export default function PlaylistPreview({ playlist }) {
     }
   }, [userData]);
 
-  const previews = playlists.map(playlist => {
-    return <Helper playlist={playlist} />;
+  const previews = playlists.map((playlist, index) => {
+    return <Helper playlist={playlist} key={index} />;
   });
   return (
     <Flex
