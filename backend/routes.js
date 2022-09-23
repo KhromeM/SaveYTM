@@ -73,30 +73,4 @@ app.post("/update", async (req, res) => {
 	}
 });
 
-app.post("/getplaylists", (req, res) => {
-	const user = req.body._user;
-	// req.body = { uid: 'uid', AuthToken: 'token'}
-	// check if the user token sent with the request is valid
-	// respond with all the playlists for that user
-	res.json(req.originalUrl);
-});
-
-app.post("/getdeleted", (req, res) => {
-	const user = req.body._user;
-	// req.body = { uid: 'uid', AuthToken: 'token'}
-	// check if the user token sent with the request is valid
-	// respond with a playlist of deleted videos from that user's playlists
-	res.json(req.originalUrl);
-});
-
-app.post("/search", (req, res) => {
-	const user = req.body._user;
-	// req.body = { uid: 'uid', AuthToken: 'token', searchTerm: 'search term'}
-	// check if the user token sent with the request is valid
-	// use youtube api to search
-	// format results
-	// send results in response
-	res.json(req.originalUrl);
-});
-
 module.exports = app;
