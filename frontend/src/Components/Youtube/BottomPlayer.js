@@ -157,7 +157,7 @@ function BottomPlayerIcons({ player, index, playControl }) {
             />
 
             <Icon
-              ml="5"
+              mx={[2, 4]}
               as={getIcon()}
               fontSize={40}
               onClick={() => handlePlay()}
@@ -165,8 +165,7 @@ function BottomPlayerIcons({ player, index, playControl }) {
             />
 
             <Icon
-              ml="5"
-              mr="5"
+              mr="5px"
               as={FaForward}
               fontSize={15}
               onClick={() => next()}
@@ -176,7 +175,7 @@ function BottomPlayerIcons({ player, index, playControl }) {
             <ShowDuration player={player} time={time} />
 
             <Flex
-              minW={[100, 250, 500, 700, 900]}
+              minW={[100, 100, 500, 700, 900]}
               ml="auto"
               mr="auto"
               _hover={{ bg: 'red.800' }}
@@ -184,8 +183,6 @@ function BottomPlayerIcons({ player, index, playControl }) {
               alignItems="center"
             >
               <Image
-                mr={(0, 0, 5, 5, 5)}
-                ml={(0, 0, 3, 5, 5)}
                 src={vid.thumbnail}
                 h={[0, 0, 50, 50, 58]}
                 objectFit="cover"
@@ -197,7 +194,7 @@ function BottomPlayerIcons({ player, index, playControl }) {
                 alignItems="flex-start"
                 justifyContent="space-between"
                 textAlign="left"
-                padding="2"
+                mx={['10px', '10px', '20px']}
                 maxW={[100, 200, 450, 650, 850]}
               >
                 <Text fontSize="lg" noOfLines={1}>
@@ -208,6 +205,8 @@ function BottomPlayerIcons({ player, index, playControl }) {
             </Flex>
 
             <Icon
+              ml="3"
+              mr="12"
               as={MdLoop}
               fontSize={25}
               color={loop ? 'red' : 'white'}
@@ -215,14 +214,14 @@ function BottomPlayerIcons({ player, index, playControl }) {
               cursor="pointer"
             />
 
-            <Icon
+            {/* <Icon
               ml="3"
               mr="9"
               as={AiFillSound}
               fontSize={20}
               onClick={() => console.log('click')}
               cursor="pointer"
-            />
+            /> */}
           </Flex>
         </Box>
       )}
@@ -266,7 +265,7 @@ const ShowDuration = ({ player, time }) => {
   }
 
   return (
-    <Box minW="65" mx={[2, 2, 5, 10, 10]}>
+    <Box minW="61" mx={[1, 1, 2, 5, 5]} textAlign="center">
       <Text> {formattedTime}</Text>
 
       <Text> {formattedDur}</Text>
