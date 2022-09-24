@@ -8,24 +8,26 @@ import PlaylistPreview from './Components/Youtube/PlaylistPreview';
 import { useAuth } from './Utils/auth.js';
 import { Routes, Route } from 'react-router-dom';
 import Callback from './Components/Callback.js';
-import { DataProvider } from './Utils/data.js';
+import { UserProvider, VideosProvider } from './Utils/data.js';
 import { PlayerProvider } from './Utils/player.js';
 
 function App() {
   return (
     <ChakraProvider theme={theme}>
       <AuthProvider>
-        <DataProvider>
-          <PlayerProvider>
-            <DarkMode>
-              <Box color="white">
-                <NavBar />
-                <Routing />
-                <BottomPlayer />
-              </Box>
-            </DarkMode>
-          </PlayerProvider>
-        </DataProvider>
+        <UserProvider>
+          <VideosProvider>
+            <PlayerProvider>
+              <DarkMode>
+                <Box color="white">
+                  <NavBar />
+                  <Routing />
+                  <BottomPlayer />
+                </Box>
+              </DarkMode>
+            </PlayerProvider>
+          </VideosProvider>
+        </UserProvider>
       </AuthProvider>
     </ChakraProvider>
   );
@@ -48,7 +50,7 @@ function MainBody() {
     <>
       {user ? (
         <>
-          {/* <MusicGallery /> */}
+          <MusicGallery />
           <PlaylistPreview />
         </>
       ) : (

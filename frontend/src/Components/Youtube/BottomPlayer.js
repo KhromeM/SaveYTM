@@ -20,6 +20,7 @@ import { useState, useEffect } from 'react';
 import { VideoSeekSlider } from 'react-video-seek-slider';
 import 'react-video-seek-slider/styles.css';
 import { usePlayer } from '../../Utils/player';
+import { useAuth } from '../../Utils/auth';
 
 const opts = {
   height: '0',
@@ -47,6 +48,7 @@ export default function BottomPlayer() {
   const [index, setIndex] = useState(0);
   const videoIds = playerStatus.playlist.map(video => video.videoId);
   const [playing, setPlaying] = useState(true);
+  const { user } = useAuth();
 
   const onReady = event => {
     setPlayer(event.target);
@@ -69,7 +71,7 @@ export default function BottomPlayer() {
     }
   }, [playerStatus]);
 
-  if (!playerStatus.active) {
+  if (!playerStatus.active || !user) {
     return <></>;
   }
   return (

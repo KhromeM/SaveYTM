@@ -1,30 +1,52 @@
 import { Box, Text, Flex, Button, Heading, Image } from '@chakra-ui/react';
 import MusicBox from './MusicBox';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useVideos } from '../Utils/data';
+import { shuffle } from '../Utils/functions';
 
 export default function MusicGallery() {
-  const [musicList, setMusicList] = useState([]);
+  let videos = useVideos().videos;
+  const previewLength = 6;
+
+  if (videos.length === 0) {
+    return <></>;
+  }
+
   // feed MusicBox components a list of 4 music objects
-  const musicBoxes = [];
-  let tempHolder = [];
-  musicList.forEach((musicObj, index) => {
-    tempHolder.push(musicObj);
-    if (tempHolder.length === 4 || index === musicList.length - 1) {
-      musicBoxes.push(<MusicBox musicList={tempHolder} key={index} />);
-      tempHolder = [];
+  const randPlaylists = [];
+  const getShuffledPlaylist = videos => {
+    let shuffled = videos.slice();
+    shuffle(shuffled);
+
+    const arr = [];
+    for (const vid of shuffled) {
+      arr.push(vid);
+      if (arr.length === 40) break;
     }
-  });
-  return (
-    <Flex
-      wrap="wrap"
-      minH="300"
-      minW="90vw"
-      mx="3vw"
-      mt="10vh"
-      mb="5vh"
-      justifyContent="center"
-    >
-      {musicBoxes}
+    randPlaylists.push(arr);
+  };
+  while (randPlaylists.length < 6) {
+    getShuffledPlaylist(videos);
+  }
+  const musicBoxes = randPlaylists.map(playlist => (
+    <Flex flexDir="column" my="5">
+      <MusicBox playlist={playlist} previewLength={previewLength} />
     </Flex>
+  ));
+
+  return (
+    <Box mt="10vh" textAlign="center">
+      <Heading> Random Order</Heading>
+      <Flex
+        wrap="wrap"
+        minH="300"
+        minW="90vw"
+        mx="3vw"
+        mb="5vh"
+        justifyContent="center"
+      >
+        {musicBoxes}
+      </Flex>
+    </Box>
   );
 }
