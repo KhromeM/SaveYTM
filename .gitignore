@@ -6,8 +6,10 @@
 /frontend/build
 /frontend/package-lock.json
 /backend/package-lock.json
-/backend/config.js
 /backend/.env
 /backend/saveytm-firebase-adminsdk-rzwar-ddd2543d07.json
+/storageBackend/.env
+/storageBackend/package-lock.json
+/storageBackend/node_modules
 
 

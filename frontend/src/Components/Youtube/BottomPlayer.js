@@ -64,6 +64,7 @@ export default function BottomPlayer() {
 
   useEffect(() => {
     if (!player.doesntExist) {
+      console.log(videoIds.slice(0, 3));
       player.loadPlaylist(videoIds);
     }
   }, [playerStatus]);
