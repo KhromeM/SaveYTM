@@ -1,6 +1,7 @@
 const { db } = require("./firebase");
 const users = db.collection("users");
 const playlists = db.collection("playlists");
+const videos = db.collection("videos");
 
 const setUser = async (data) => {
 	const { uid } = data;
@@ -34,9 +35,15 @@ const getPlaylist = async (playlistObj) => {
 	}
 };
 
+const setUserVideos = async (user, userVideos) => {
+	const ref = videos.doc(user.uid);
+	return await ref.set({ videos: userVideos });
+};
+
 module.exports = {
 	setUser,
 	getUser,
 	setPlaylist,
 	getPlaylist,
+	setUserVideos,
 };

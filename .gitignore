@@ -11,5 +11,6 @@
 /storageBackend/.env
 /storageBackend/package-lock.json
 /storageBackend/node_modules
+./DS_Store
 
 

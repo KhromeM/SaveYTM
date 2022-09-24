@@ -1,10 +1,10 @@
 import MusicBox from '../MusicBox';
-import { Box, Text, Flex, Button, Heading, Image } from '@chakra-ui/react';
+import { Text, Flex } from '@chakra-ui/react';
 import { shuffle } from '../../Utils/functions';
 import { useState, useEffect } from 'react';
 import { useData } from '../../Utils/data';
 
-export default function PlaylistPreview({ playlist }) {
+export default function PlaylistPreview() {
   const [playlists, setPlaylists] = useState([]);
   const { userData } = useData();
 
@@ -42,13 +42,16 @@ export default function PlaylistPreview({ playlist }) {
 }
 
 const Helper = ({ playlist }) => {
-  const { getSnapshot } = useData();
+  const { getSnapshot, getDocument } = useData();
   const [fullPlaylist, setFullPlaylist] = useState({});
   useEffect(() => {
-    const func = getSnapshot('playlists', playlist.playlistId, setFullPlaylist);
-    const unSub = func();
-    return () => unSub();
+    getDocument('playlists', playlist.playlistId, setFullPlaylist);
   }, []);
+  // useEffect(() => {
+  //   const func = getSnapshot('playlists', playlist.playlistId, setFullPlaylist);
+  //   const unSub = func();
+  //   return () => unSub();
+  // }, []);
 
   let shuffled = [];
   if (fullPlaylist.videos) {
@@ -57,7 +60,7 @@ const Helper = ({ playlist }) => {
   shuffle(shuffled);
   return (
     <Flex flexDir="column" my="5">
-      <Text fontSize="xl" as="b">
+      <Text fontSize="xl" as="b" ml="3">
         {playlist.playlistTitle}{' '}
       </Text>
       <MusicBox playlist={shuffled} />

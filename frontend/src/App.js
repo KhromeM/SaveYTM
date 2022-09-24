@@ -21,6 +21,7 @@ function App() {
               <Box color="white">
                 <NavBar />
                 <Routing />
+                <BottomPlayer />
               </Box>
             </DarkMode>
           </PlayerProvider>
@@ -49,7 +50,6 @@ function MainBody() {
         <>
           {/* <MusicGallery /> */}
           <PlaylistPreview />
-          <BottomPlayer />
         </>
       ) : (
         <></>

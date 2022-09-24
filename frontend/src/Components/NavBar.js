@@ -20,6 +20,10 @@ export default function NavBar() {
           Save Youtube Music
         </Heading>
       </Box>
+      <Box ml="auto" mr="auto">
+        <Text fontSize="2xl"> Playlists</Text>
+      </Box>
+
       <Flex ml="auto" mr="10">
         <Auth />
       </Flex>

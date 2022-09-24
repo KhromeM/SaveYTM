@@ -13,7 +13,7 @@ export default function MusicBar({ vid, playlist, index }) {
   };
   return (
     <Flex
-      minW={[300, 300, 300, 400, 550]}
+      minW={[300, 300, 300, 400, 400]}
       maxW="400"
       maxH="70"
       minH="70"

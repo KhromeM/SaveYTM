@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect } from 'react';
-import { getFirestore, doc, onSnapshot, collection } from 'firebase/firestore';
+import { getFirestore, doc, onSnapshot, getDoc } from 'firebase/firestore';
 import app from './firebase.js';
 import { useAuth } from './auth.js';
 
@@ -22,16 +22,15 @@ const useGetData = () => {
       setter(doc.data());
     });
 
+  const getDocument = (collection, document, setter) => {
+    getDoc(doc(db, collection, document)).then(doc => setter(doc.data()));
+  };
+
   useEffect(() => {
     if (user) {
-      const func = getSnapshot('users', user.uid, setUserData);
-
-      const unSub = func();
-      return () => {
-        unSub();
-      };
+      getDocument('users', user.uid, setUserData);
     }
   }, [user]);
 
-  return { userData, getSnapshot };
+  return { userData, getSnapshot, getDocument };
 };

@@ -2,7 +2,7 @@ const { getClient } = require("./oauth");
 const google = require("googleapis").google;
 const {
 	setUser,
-	getUser,
+	setUserVideos,
 	setPlaylist,
 	getPlaylist,
 } = require("../firebase/db.js");
@@ -125,11 +125,16 @@ const updateUserPlaylists = async (user) => {
 	setUser(user);
 
 	// get all the videos in the playlist
-	playlists.forEach(async (playlistObj) => {
+	let all = [];
+	for (const [index, playlistObj] of playlists.entries()) {
 		const videos = await getVideos(user, playlistObj);
 		const diffed = await diff(videos);
+		all = all.concat(diffed.videos);
 		setPlaylist(diffed);
-	});
+		if (playlists[index + 1] === undefined) {
+			setUserVideos(user, all); //set all the videos
+		}
+	}
 };
 
 const diff = async (playlist) => {
