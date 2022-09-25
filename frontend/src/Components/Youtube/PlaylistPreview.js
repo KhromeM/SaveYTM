@@ -1,5 +1,5 @@
 import MusicBox from '../MusicBox';
-import { Text, Flex } from '@chakra-ui/react';
+import { Text, Flex, Heading } from '@chakra-ui/react';
 import { shuffle } from '../../Utils/functions';
 import { useState, useEffect } from 'react';
 import { useUser } from '../../Utils/data';
@@ -10,6 +10,7 @@ export default function PlaylistPreview() {
 
   const getRandomPlaylists = (num, array) => {
     const returnArr = [];
+    if (!array) return returnArr;
     for (let i = 0; i < num; i++) {
       const randIndex = Math.floor(Math.random() * array.length);
       returnArr.push(array[randIndex]);
@@ -19,6 +20,8 @@ export default function PlaylistPreview() {
   useEffect(() => {
     const func = () => setPlaylists(getRandomPlaylists(6, userData.playlists));
     if (userData) {
+      console.log(userData);
+
       func();
     }
   }, [userData]);
@@ -26,6 +29,21 @@ export default function PlaylistPreview() {
   const previews = playlists.map((playlist, index) => {
     return <Helper playlist={playlist} key={index} />;
   });
+  if (!playlists.length) {
+    return (
+      <Flex
+        wrap="wrap"
+        minH="100"
+        minW="90vw"
+        mx="3vw"
+        mt="10vh"
+        mb="5vh"
+        justifyContent="center"
+      >
+        <Heading>You have no videos</Heading>
+      </Flex>
+    );
+  }
   return (
     <Flex
       wrap="wrap"

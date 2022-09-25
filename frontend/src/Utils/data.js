@@ -12,13 +12,15 @@ export const UserProvider = ({ children }) => {
   const data = useGetUser();
   return <userContext.Provider value={data}>{children}</userContext.Provider>;
 };
-const getSnapshot = (collection, document, setter) => () =>
+const getSnapshot = (collection, document, setter, placeholder) => () =>
   onSnapshot(doc(db, collection, document), doc => {
-    setter(doc.data());
+    setter(doc.data() || placeholder);
   });
 
-const getDocument = (collection, document, setter) => {
-  getDoc(doc(db, collection, document)).then(doc => setter(doc.data()));
+const getDocument = (collection, document, setter, placeholder) => {
+  getDoc(doc(db, collection, document)).then(doc => {
+    setter(doc.data() || placeholder);
+  });
 };
 
 const useGetUser = () => {
@@ -28,6 +30,8 @@ const useGetUser = () => {
   useEffect(() => {
     if (user) {
       getDocument('users', user.uid, setUserData);
+    } else {
+      setUserData(false);
     }
   }, [user]);
 
@@ -50,7 +54,9 @@ const useGetVideos = () => {
 
   useEffect(() => {
     if (user) {
-      getDocument('videos', user.uid, setUserVideos);
+      getDocument('videos', user.uid, setUserVideos, userVideos);
+    } else {
+      setUserVideos({ videos: [] });
     }
   }, [user]);
 

@@ -28,9 +28,9 @@ export default function MusicGallery() {
   while (randPlaylists.length < 6) {
     getShuffledPlaylist(videos);
   }
-  const musicBoxes = randPlaylists.map(playlist => (
+  const musicBoxes = randPlaylists.map((playlist, index) => (
     <Flex flexDir="column" my="5">
-      <MusicBox playlist={playlist} previewLength={previewLength} />
+      <MusicBox playlist={playlist} previewLength={previewLength} key={index} />
     </Flex>
   ));
 
