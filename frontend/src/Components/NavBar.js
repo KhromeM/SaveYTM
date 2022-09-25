@@ -1,19 +1,32 @@
 import {
   Box,
-  Text,
   Flex,
   Button,
   Heading,
   Image,
   Show,
-  Hide,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  Icon,
 } from '@chakra-ui/react';
-import { Menu, MenuButton, MenuList, MenuItem } from '@chakra-ui/react';
+
 import { useAuth } from '../Utils/auth.js';
 import { getOAuthLink, update } from '../Utils/server.js';
 import logo from '../Resources/Logo/SaveYTM.svg';
+import SearchBar from './Search/SearchBar.js';
+import { MdLibraryMusic } from 'react-icons/md';
+import { useNavigate } from 'react-router-dom';
 
 export default function NavBar() {
+  const navigate = useNavigate();
+  const goToPlaylists = () => {
+    navigate('/playlists');
+  };
+  const goHome = () => {
+    navigate('/');
+  };
   return (
     <Flex
       bg="black"
@@ -25,19 +38,33 @@ export default function NavBar() {
       alignItems="center"
       boxShadow="base"
     >
-      <Image src={logo} w="60px" mr="5px" ml="10px" />
+      <Flex onClick={goHome} cursor="pointer" alignItems="center">
+        <Image src={logo} w="55px" mr="10px" ml="10px" />
 
-      <Show breakpoint="(min-width: 1000px)">
-        <Heading fontWeight="extrabold" size="xl">
-          Save Youtube Music
-        </Heading>
-      </Show>
+        <Show breakpoint="(min-width: 800px)">
+          <Heading
+            fontWeight="extrabold"
+            size="xl"
+            _hover={{ color: 'red.500' }}
+          >
+            SaveYTM
+          </Heading>
+        </Show>
+      </Flex>
+      <SearchBar />
 
-      {/* <Box ml="auto" mr="auto">
-        <Text fontSize="2xl"> Playlists</Text>
-      </Box> */}
+      <Icon
+        as={MdLibraryMusic}
+        fontSize={30}
+        onClick={goToPlaylists}
+        cursor="pointer"
+        ml="auto"
+        mr="20px"
+        color="white"
+        _hover={{ color: 'red.500' }}
+      />
 
-      <Flex ml="auto" mr="10">
+      <Flex mr="10">
         <Auth />
       </Flex>
     </Flex>

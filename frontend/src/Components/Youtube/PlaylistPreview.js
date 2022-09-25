@@ -40,7 +40,7 @@ export default function PlaylistPreview() {
         mb="5vh"
         justifyContent="center"
       >
-        <Heading>You have no videos</Heading>
+        <Heading>You have no playlists. Create them on YouTube.</Heading>
       </Flex>
     );
   }
@@ -49,10 +49,11 @@ export default function PlaylistPreview() {
       wrap="wrap"
       minH="300"
       minW="90vw"
-      mx="3vw"
       mt="10vh"
       mb="5vh"
-      justifyContent="center"
+      mx="13vw"
+
+      // justifyContent="center"
     >
       {previews}
     </Flex>

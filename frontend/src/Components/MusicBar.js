@@ -13,13 +13,14 @@ export default function MusicBar({ vid, playlist, index }) {
   };
   return (
     <Flex
-      minW={[300, 300, 300, 400, 400]}
+      minW="400"
       maxW="400"
       maxH="70"
       minH="70"
       alignItems="center"
-      _hover={{ bg: 'red.800' }}
+      _hover={{ color: 'red.500' }}
       onClick={playThis}
+      cursor="pointer"
     >
       <Image
         src={thumbnail}
@@ -43,6 +44,7 @@ export default function MusicBar({ vid, playlist, index }) {
         </Text>
         <Text fontSize="sm"> {channel} </Text>
       </Flex>
+      <hr color="red" />
     </Flex>
   );
 }

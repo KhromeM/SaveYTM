@@ -10,6 +10,7 @@ import { Routes, Route } from 'react-router-dom';
 import Callback from './Components/Callback.js';
 import { UserProvider, VideosProvider } from './Utils/data.js';
 import { PlayerProvider } from './Utils/player.js';
+import PlaylistsPage from './Components/Playlist/PlaylistsPage';
 
 function App() {
   return (
@@ -38,8 +39,8 @@ function Routing() {
     <Routes>
       <Route path="/" element={<MainBody />} />
       <Route path="/auth/google/callback" element={<Callback />} />
-      {/* <Route path="/playlist" element={<PlaylistPage />} />
-      <Route path="/deleted" element={<DeletedPage />} /> */}
+      <Route path="/playlists" element={<PlaylistsPage />} />
+      {/* <Route path="/deleted" element={<DeletedPage />} />  */}
     </Routes>
   );
 }

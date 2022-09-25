@@ -3,6 +3,7 @@ import MusicBox from './MusicBox';
 import { useState, useEffect } from 'react';
 import { useVideos } from '../Utils/data';
 import { shuffle } from '../Utils/functions';
+import { nanoid } from 'nanoid';
 
 export default function MusicGallery() {
   let videos = useVideos().videos;
@@ -28,9 +29,9 @@ export default function MusicGallery() {
   while (randPlaylists.length < 6) {
     getShuffledPlaylist(videos);
   }
-  const musicBoxes = randPlaylists.map((playlist, index) => (
-    <Flex flexDir="column" my="5">
-      <MusicBox playlist={playlist} previewLength={previewLength} key={index} />
+  const musicBoxes = randPlaylists.map(playlist => (
+    <Flex flexDir="column" my="5" key={nanoid()}>
+      <MusicBox playlist={playlist} previewLength={previewLength} />
     </Flex>
   ));
 
@@ -41,9 +42,9 @@ export default function MusicGallery() {
         wrap="wrap"
         minH="300"
         minW="90vw"
-        mx="3vw"
+        mx="13vw"
         mb="5vh"
-        justifyContent="center"
+        // justifyContent="center"
       >
         {musicBoxes}
       </Flex>
