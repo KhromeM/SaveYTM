@@ -1,7 +1,17 @@
-import { Box, Text, Flex, Button, Heading, Image } from '@chakra-ui/react';
+import {
+  Box,
+  Text,
+  Flex,
+  Button,
+  Heading,
+  Image,
+  Show,
+  Hide,
+} from '@chakra-ui/react';
 import { Menu, MenuButton, MenuList, MenuItem } from '@chakra-ui/react';
 import { useAuth } from '../Utils/auth.js';
 import { getOAuthLink, update } from '../Utils/server.js';
+import logo from '../Resources/Logo/SaveYTM.svg';
 
 export default function NavBar() {
   return (
@@ -15,11 +25,14 @@ export default function NavBar() {
       alignItems="center"
       boxShadow="base"
     >
-      <Box ml="10">
+      <Image src={logo} w="60px" mr="5px" ml="10px" />
+
+      <Show breakpoint="(min-width: 1000px)">
         <Heading fontWeight="extrabold" size="xl">
           Save Youtube Music
         </Heading>
-      </Box>
+      </Show>
+
       {/* <Box ml="auto" mr="auto">
         <Text fontSize="2xl"> Playlists</Text>
       </Box> */}

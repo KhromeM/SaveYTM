@@ -1,7 +1,6 @@
 import { extendTheme, theme } from '@chakra-ui/react';
-import { mode } from '@chakra-ui/theme-tools';
 import '@fontsource/roboto';
-import '@fontsource/noto-sans';
+
 let myTheme = extendTheme({
   styles: {
     global: props => ({
@@ -11,8 +10,8 @@ let myTheme = extendTheme({
     }),
   },
   fonts: {
-    heading: `roboto,noto-sans, sans-serif`,
-    body: `roboto,noto-sans, sans-serif`,
+    heading: `roboto, sans-serif`,
+    body: `roboto,sans-serif`,
   },
   colors: {
     youtube: {
