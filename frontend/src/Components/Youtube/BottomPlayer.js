@@ -270,7 +270,7 @@ const ShowDuration = ({ player, time }) => {
   }
 
   return (
-    <Box minW="61" mx={[1, 1, 2, 5, 5]} textAlign="center">
+    <Box minW="65" mx={[3, 5]} textAlign="center">
       <Text> {formattedTime}</Text>
 
       <Text> {formattedDur}</Text>

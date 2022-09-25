@@ -2,7 +2,7 @@ import MusicBox from '../MusicBox';
 import { Text, Flex, Heading } from '@chakra-ui/react';
 import { shuffle } from '../../Utils/functions';
 import { useState, useEffect } from 'react';
-import { useUser } from '../../Utils/data';
+import { useUser, getDocument } from '../../Utils/data';
 
 export default function PlaylistPreview() {
   const [playlists, setPlaylists] = useState([]);
@@ -61,7 +61,6 @@ export default function PlaylistPreview() {
 }
 
 const Helper = ({ playlist }) => {
-  const { getSnapshot, getDocument } = useUser();
   const [fullPlaylist, setFullPlaylist] = useState({});
 
   useEffect(() => {

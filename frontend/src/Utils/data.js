@@ -12,12 +12,12 @@ export const UserProvider = ({ children }) => {
   const data = useGetUser();
   return <userContext.Provider value={data}>{children}</userContext.Provider>;
 };
-const getSnapshot = (collection, document, setter, placeholder) => () =>
+export const getSnapshot = (collection, document, setter, placeholder) => () =>
   onSnapshot(doc(db, collection, document), doc => {
     setter(doc.data() || placeholder);
   });
 
-const getDocument = (collection, document, setter, placeholder) => {
+export const getDocument = (collection, document, setter, placeholder) => {
   getDoc(doc(db, collection, document)).then(doc => {
     setter(doc.data() || placeholder);
   });
@@ -35,7 +35,7 @@ const useGetUser = () => {
     }
   }, [user]);
 
-  return { userData, getSnapshot, getDocument };
+  return { userData };
 };
 
 const videosContext = createContext();

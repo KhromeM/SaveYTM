@@ -11,6 +11,7 @@ import Callback from './Components/Callback.js';
 import { UserProvider, VideosProvider } from './Utils/data.js';
 import { PlayerProvider } from './Utils/player.js';
 import PlaylistsPage from './Components/Playlist/PlaylistsPage';
+import PlaylistPage from './Components/Playlist/PlaylistPage';
 
 function App() {
   return (
@@ -40,6 +41,7 @@ function Routing() {
       <Route path="/" element={<MainBody />} />
       <Route path="/auth/google/callback" element={<Callback />} />
       <Route path="/playlists" element={<PlaylistsPage />} />
+      <Route path="/playlist" element={<PlaylistPage />} />
       {/* <Route path="/deleted" element={<DeletedPage />} />  */}
     </Routes>
   );

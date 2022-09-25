@@ -1,20 +1,20 @@
 import { Box, Text, Flex, Button, Heading, Image } from '@chakra-ui/react';
 import { usePlayer } from '../Utils/player';
 
-export default function MusicBar({ vid, playlist, index }) {
+export default function MusicBar({ vid, playlist, index, size = 1 }) {
   const { setPlayerStatus } = usePlayer();
   const { channel, thumbnail, title } = vid;
-
   const playThis = () => {
     setPlayerStatus({
       active: true,
       playlist: playlist.slice(index),
     });
   };
+  const w = 400 * size;
   return (
     <Flex
       minW="400"
-      maxW="400"
+      maxW={w}
       maxH="70"
       minH="70"
       alignItems="center"
