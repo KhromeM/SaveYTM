@@ -27,7 +27,6 @@ app.post("/upload", async (req, res) => {
 	try {
 		//verify playlist
 		const results = await uploadPlaylist(user.uid, playlist);
-		console.log(results);
 		console.log("Still Alive");
 		res.json({ status: "success", message: "Playlist archived" });
 		res.end();

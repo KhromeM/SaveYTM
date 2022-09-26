@@ -35,8 +35,10 @@ const uploadVideo = async (uid, videoId) => {
 	return new Promise((resolve) => {
 		S3.upload(params, (err) => {
 			if (err) {
+				console.log({ videoId, result: false, error: err });
 				resolve({ videoId, result: false, error: err });
 			} else {
+				console.log({ videoId, result: true });
 				resolve({ videoId, result: true });
 			}
 		});

@@ -1,1 +1,2 @@
 runtime: nodejs16
+instance_class: F4
