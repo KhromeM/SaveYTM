@@ -7,6 +7,10 @@ app.use(cors());
 app.use(json({ limit: "10MB" }));
 
 app.use(async (req, res, next) => {
+	// const limit = 30 * 60 * 1000; // 20 mins
+	// setTimeout(() => {
+	// 	throw "timeout error";
+	// }, limit);
 	console.log("Got Request!");
 	req.body._user = await verifyUser(req.body.idToken);
 
@@ -22,7 +26,6 @@ app.post("/upload", async (req, res) => {
 	const playlist = req.body.playlist;
 	try {
 		//verify playlist
-		console.log(playlist.videos.length);
 		const results = await uploadPlaylist(user.uid, playlist);
 		console.log(results);
 		console.log("Still Alive");

@@ -1,7 +1,7 @@
-const baseURL = process.env.baseURL || "http://localhost:3000";
+const baseURL = "https://www.saveytm.com";
 
 module.exports = {
-	port: process.env.PORT || 3003,
+	port: process.env.PORT || 8080,
 	baseURL: baseURL,
 	oauth2Credentials: {
 		client_id:

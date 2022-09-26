@@ -1,9 +1,17 @@
 // https://saveytm.s3.amazonaws.com/youtubevideo.mp4
 
 const AWS = require("aws-sdk");
+
 const { getReadStream } = require("./download.js");
-const S3 = new AWS.S3();
+
 const Bucket = "saveytm";
+AWS.config.update({
+	accessKeyId: process.env.ACCESSKEYID,
+	secretAccessKey: process.env.SECRETACCESSKEY,
+	region: "us-east-1",
+});
+
+const S3 = new AWS.S3();
 
 const uploadVideo = async (uid, videoId) => {
 	let stream, fileName;
@@ -12,12 +20,14 @@ const uploadVideo = async (uid, videoId) => {
 		stream = streamObj.stream;
 		fileName = streamObj.fileName;
 	} catch (e) {
-		console.log(e);
-		console.log("Error uploading: " + videoId);
+		// console.log(e);
+		// console.log("Error uploading: " + videoId);
 		stream = null;
 	}
 	if (stream === null) {
-		return new Promise((r) => r());
+		return new Promise((resolve) =>
+			resolve({ videoId, result: false, error: "Not available" })
+		);
 	}
 
 	const path = uid + "/" + fileName;
@@ -25,11 +35,8 @@ const uploadVideo = async (uid, videoId) => {
 	return new Promise((resolve) => {
 		S3.upload(params, (err) => {
 			if (err) {
-				console.log("Error uploading file: " + path);
-				console.log(err);
-				resolve({ videoId, result: false });
+				resolve({ videoId, result: false, error: err });
 			} else {
-				console.log("Uploaded: " + path);
 				resolve({ videoId, result: true });
 			}
 		});

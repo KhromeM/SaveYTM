@@ -26,6 +26,10 @@ const getReadStream = async (id) => {
 		}
 	}
 	let stream = ytdl(id, { quality: itag });
+	const limit = 20 * 60 * 1000; // 20 mins
+	setTimeout(() => {
+		stream.emit("error", "timeout");
+	}, limit);
 	return { stream, fileName };
 };
 
