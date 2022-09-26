@@ -9,7 +9,6 @@ export default function PlaylistsPage() {
   let playlists = [];
   if (userData) {
     playlists = userData.playlists;
-    console.log(playlists.length);
   }
 
   if (!playlists.length) {

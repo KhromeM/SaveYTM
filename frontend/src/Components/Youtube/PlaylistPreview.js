@@ -2,7 +2,7 @@ import MusicBox from '../MusicBox';
 import { Text, Flex, Heading } from '@chakra-ui/react';
 import { shuffle } from '../../Utils/functions';
 import { useState, useEffect } from 'react';
-import { useUser, getDocument } from '../../Utils/data';
+import { useUser, getSnapshot } from '../../Utils/data';
 
 export default function PlaylistPreview() {
   const [playlists, setPlaylists] = useState([]);
@@ -20,8 +20,6 @@ export default function PlaylistPreview() {
   useEffect(() => {
     const func = () => setPlaylists(getRandomPlaylists(6, userData.playlists));
     if (userData) {
-      console.log(userData);
-
       func();
     }
   }, [userData]);
@@ -63,14 +61,14 @@ export default function PlaylistPreview() {
 const Helper = ({ playlist }) => {
   const [fullPlaylist, setFullPlaylist] = useState({});
 
-  useEffect(() => {
-    getDocument('playlists', playlist.playlistId, setFullPlaylist);
-  }, []);
   // useEffect(() => {
-  //   const func = getSnapshot('playlists', playlist.playlistId, setFullPlaylist);
-  //   const unSub = func();
-  //   return () => unSub();
+  //   getDocument('playlists', playlist.playlistId, setFullPlaylist);
   // }, []);
+  useEffect(() => {
+    const func = getSnapshot('playlists', playlist.playlistId, setFullPlaylist);
+    const unSub = func();
+    return () => unSub();
+  }, []);
 
   let shuffled = [];
   if (fullPlaylist.videos) {

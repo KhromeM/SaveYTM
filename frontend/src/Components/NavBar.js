@@ -39,6 +39,7 @@ export default function NavBar() {
       height="7vh"
       alignItems="center"
       boxShadow="base"
+      zIndex="banner"
     >
       <Flex onClick={goHome} cursor="pointer" alignItems="center">
         <Image src={logo} w="55px" mr="10px" ml="10px" />

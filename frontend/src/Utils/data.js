@@ -27,9 +27,18 @@ const useGetUser = () => {
   const { user } = useAuth();
   const [userData, setUserData] = useState(false);
 
+  // useEffect(() => {
+  //   if (user) {
+  //     getDocument('users', user.uid, setUserData);
+  //   } else {
+  //     setUserData(false);
+  //   }
+  // }, [user]);
   useEffect(() => {
     if (user) {
-      getDocument('users', user.uid, setUserData);
+      const func = getSnapshot('users', user.uid, setUserData);
+      const unSub = func();
+      return () => unSub();
     } else {
       setUserData(false);
     }
@@ -52,9 +61,19 @@ const useGetVideos = () => {
   const { user } = useAuth();
   const [userVideos, setUserVideos] = useState({ videos: [] });
 
+  // useEffect(() => {
+  //   if (user) {
+  //     getDocument('videos', user.uid, setUserVideos, userVideos);
+  //   } else {
+  //     setUserVideos({ videos: [] });
+  //   }
+  // }, [user]);
+
   useEffect(() => {
     if (user) {
-      getDocument('videos', user.uid, setUserVideos, userVideos);
+      const func = getSnapshot('videos', user.uid, setUserVideos, userVideos);
+      const unSub = func();
+      return () => unSub();
     } else {
       setUserVideos({ videos: [] });
     }
