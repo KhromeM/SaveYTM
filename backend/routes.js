@@ -1,7 +1,6 @@
 const app = require("express")();
 const cors = require("cors");
 const { json } = require("express");
-const cookieparser = require("cookie-parser");
 const { verifyUser } = require("./firebase/firebase");
 const { setUser, getUser } = require("./firebase/db.js");
 const { getAuthURL, getToken } = require("./google/oauth.js");
@@ -10,7 +9,6 @@ const CONFIG = require("./config.js");
 
 app.use(cors());
 app.use(json());
-app.use(cookieparser());
 
 app.use(async (req, res, next) => {
 	console.log("Got Request!");

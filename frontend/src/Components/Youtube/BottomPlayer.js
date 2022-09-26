@@ -99,6 +99,7 @@ function BottomPlayerIcons({ player, index, playControl }) {
     const interval = setInterval(() => {
       if (playing && player.getCurrentTime) {
         setTime(player.getCurrentTime());
+        console.log('Volume: ' + player.getVolume());
       }
     }, 300);
     return () => {

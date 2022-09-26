@@ -13,11 +13,12 @@ import {
 } from '@chakra-ui/react';
 
 import { useAuth } from '../Utils/auth.js';
-import { getOAuthLink, update } from '../Utils/server.js';
+import { getOAuthLink, update, upload } from '../Utils/server.js';
 import logo from '../Resources/Logo/SaveYTM.svg';
 import SearchBar from './Search/SearchBar.js';
 import { MdLibraryMusic } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
+import { useVideos } from '../Utils/data.js';
 
 export default function NavBar() {
   const navigate = useNavigate();
@@ -27,6 +28,7 @@ export default function NavBar() {
   const goHome = () => {
     navigate('/');
   };
+
   return (
     <Flex
       bg="black"
@@ -73,6 +75,11 @@ export default function NavBar() {
 
 const Auth = () => {
   const { user, login, logout } = useAuth();
+  const videos = useVideos();
+  const handleUpload = async () => {
+    let idToken = await user.getIdToken(false);
+    const res = await upload(videos, idToken);
+  };
 
   const handleAuth = () => {
     user ? logout() : login();
@@ -85,7 +92,7 @@ const Auth = () => {
 
   const handleUpdate = async () => {
     let idToken = await user.getIdToken(false);
-    const { authURL } = await update(idToken);
+    await update(idToken);
   };
 
   return (
@@ -103,6 +110,7 @@ const Auth = () => {
             {/* <MenuItem>Settings</MenuItem>  */}
             <MenuItem onClick={handleOAuth}>Give Access</MenuItem>
             <MenuItem onClick={handleUpdate}>Update</MenuItem>
+            <MenuItem onClick={handleUpload}>Archive Everything</MenuItem>
 
             <MenuItem onClick={handleAuth}>Logout</MenuItem>
           </MenuList>

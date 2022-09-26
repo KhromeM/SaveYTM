@@ -47,7 +47,6 @@ export default function PlaylistsPage() {
 }
 
 const Helper = ({ playlist }) => {
-  const sendToPlaylist = () => {};
   const h = 720 / 4.5;
   const w = 1280 / 4.5;
   return (
