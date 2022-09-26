@@ -50,7 +50,7 @@ export default function PlaylistPreview() {
       minH="300"
       minW="90vw"
       mt="10vh"
-      mb="5vh"
+      mb="15vh"
       mx="13vw"
 
       // justifyContent="center"

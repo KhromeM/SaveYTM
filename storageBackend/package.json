@@ -1,19 +1,21 @@
 {
-  "name": "storagebackend",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "aws-sdk": "^2.1223.0",
-    "cors": "^2.8.5",
-    "dotenv": "^16.0.2",
-    "express": "^4.18.1",
-    "node-fetch": "^2.6.7",
-    "ytdl-core": "^4.11.2"
-  }
+	"name": "storagebackend",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"aws-sdk": "^2.1223.0",
+		"cors": "^2.8.5",
+		"dotenv": "^16.0.2",
+		"express": "^4.18.1",
+		"node-fetch": "^2.6.7",
+		"ytdl-core": "^4.11.2",
+		"firebase-admin": "^11.0.1",
+		"google-auth-library": "^8.5.1"
+	}
 }
