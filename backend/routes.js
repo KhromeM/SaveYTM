@@ -11,8 +11,8 @@ app.use(cors());
 app.use(json());
 
 app.use(async (req, res, next) => {
-	console.log("Got Request!");
 	req.body._user = await verifyUser(req.body.idToken);
+	console.log("Req: " + req.body._user.uid);
 
 	if (!req.body._user.uid) {
 		res.json({ status: "fail", message: "Invalid User. Please log in." });

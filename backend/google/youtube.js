@@ -132,7 +132,7 @@ const updateUserPlaylists = async (user) => {
 		all = all.concat(diffed.videos);
 		setPlaylist(diffed);
 		if (playlists[index + 1] === undefined) {
-			setUserVideos(user, all); //set all the videos
+			setUserVideos(user, filter(all)); //set all the videos
 		}
 	}
 };
@@ -169,6 +169,19 @@ const diff = async (playlist) => {
 	});
 
 	return playlistDB;
+};
+
+const filter = (videos) => {
+	let set = new Set();
+	let filteredVideos = videos.filter((vid) => {
+		if (set.has(vid.videoId)) {
+			return false;
+		}
+		set.add(vid.videoId);
+		return true;
+	});
+	console.log(filteredVideos.length);
+	return filteredVideos;
 };
 
 module.exports = { getPlaylists, getVideos, updateUserPlaylists };

@@ -60,7 +60,6 @@ export const VideosProvider = ({ children }) => {
 const useGetVideos = () => {
   const { user } = useAuth();
   const [userVideos, setUserVideos] = useState({ videos: [] });
-
   let set = new Set();
   let filteredVideos = userVideos.videos.filter(vid => {
     if (set.has(vid.videoId)) {
@@ -87,6 +86,8 @@ const useGetVideos = () => {
       setUserVideos({ videos: [] });
     }
   }, [user]);
+
+  console.log(filteredVideos.length, userVideos.videos.length);
 
   return { videos: filteredVideos };
 };
