@@ -41,7 +41,7 @@ export default function SearchBar() {
   };
 
   let searchResults = results.map(vid => (
-    <MusicBar vid={vid} playlist={[vid]} key={nanoid()} index={0} />
+    <MusicBar vid={vid} playlist={[vid]} key={nanoid()} size={3} index={0} />
   ));
 
   return (
@@ -64,21 +64,19 @@ export default function SearchBar() {
 
       <Modal isOpen={isOpen} size="4xl">
         <ModalOverlay />
-        <ModalContent>
+        <ModalContent borderRadius="2xl" bg="black">
           <ModalBody bg="black" color="white" borderRadius="2xl">
-            <Flex direction="column" justifyContent="center">
-              <Box mx="10vw" my="2vh">
-                <Input
-                  placeholder="Search"
-                  _hover={{ borderColor: 'red.500' }}
-                  _focusVisible={{ borderColor: 'red.500' }}
-                  value={searchTerm}
-                  onChange={onChange}
-                  mb="2vh"
-                />
-                <Box overflowY="scroll" maxH="600px">
-                  {searchResults}
-                </Box>
+            <Flex direction="column" justifyContent="center" mx="10vw" my="2vh">
+              <Input
+                placeholder="Search"
+                _hover={{ borderColor: 'red.500' }}
+                _focusVisible={{ borderColor: 'red.500' }}
+                value={searchTerm}
+                onChange={onChange}
+                mb="2vh"
+              />
+              <Box overflowY="scroll" maxH="600px">
+                {searchResults}
               </Box>
             </Flex>
           </ModalBody>
