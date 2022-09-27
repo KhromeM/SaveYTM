@@ -8,16 +8,17 @@ import {
   Show,
   Hide,
   Input,
-  Scol,
+  useOutsideClick,
 } from '@chakra-ui/react';
 import { Modal, ModalOverlay, ModalContent, ModalBody } from '@chakra-ui/react';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useVideos } from '../../Utils/data';
 import { search } from 'fast-fuzzy';
 import MusicBar from '../MusicBar.js';
 import { nanoid } from 'nanoid';
 
 export default function SearchBar() {
+  const ref = useRef();
   const videos = useVideos().videos;
   const [searchTerm, setSearchTerm] = useState('');
   const [isOpen, setIsOpen] = useState(false);
@@ -32,6 +33,10 @@ export default function SearchBar() {
       setIsOpen(false);
     }
   };
+  useOutsideClick({
+    ref: ref,
+    handler: () => setIsOpen(false),
+  });
   const handleSearch = () => {
     if (!videos.length) return;
     const resultsNow = search(searchTerm, videos, {
