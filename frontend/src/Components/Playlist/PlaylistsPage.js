@@ -22,7 +22,7 @@ export default function PlaylistsPage() {
         mb="5vh"
         justifyContent="center"
       >
-        <Heading>You have no playlists</Heading>
+        <Text fontSize={'2xl'}>You have no playlists</Text>
       </Flex>
     );
   }

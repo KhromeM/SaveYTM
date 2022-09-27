@@ -61,6 +61,15 @@ const useGetVideos = () => {
   const { user } = useAuth();
   const [userVideos, setUserVideos] = useState({ videos: [] });
 
+  let set = new Set();
+  let filteredVideos = userVideos.videos.filter(vid => {
+    if (set.has(vid.videoId)) {
+      return false;
+    }
+    set.add(vid.videoId);
+    return true;
+  });
+
   // useEffect(() => {
   //   if (user) {
   //     getDocument('videos', user.uid, setUserVideos, userVideos);
@@ -79,5 +88,5 @@ const useGetVideos = () => {
     }
   }, [user]);
 
-  return userVideos;
+  return { videos: filteredVideos };
 };

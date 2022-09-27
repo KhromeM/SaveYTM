@@ -7,10 +7,12 @@ import { useUser, getSnapshot } from '../../Utils/data';
 export default function PlaylistPreview() {
   const [playlists, setPlaylists] = useState([]);
   const { userData } = useUser();
+  // console.log(userData);
 
   const getRandomPlaylists = (num, array) => {
     const returnArr = [];
-    if (!array) return returnArr;
+    if (!array || !array.length) return returnArr;
+
     for (let i = 0; i < num; i++) {
       const randIndex = Math.floor(Math.random() * array.length);
       returnArr.push(array[randIndex]);
@@ -28,6 +30,10 @@ export default function PlaylistPreview() {
     return <Helper playlist={playlist} key={index} />;
   });
   if (!playlists.length) {
+    let message = 'You have no playlists. Create them on YouTube.';
+    if (!userData) {
+      message = `Give us access to your youtube account. Click the profile icon then "Give Access"`;
+    }
     return (
       <Flex
         wrap="wrap"
@@ -38,7 +44,7 @@ export default function PlaylistPreview() {
         mb="5vh"
         justifyContent="center"
       >
-        <Heading>You have no playlists. Create them on YouTube.</Heading>
+        <Text fontSize={'2xl'}>{message}</Text>
       </Flex>
     );
   }
@@ -60,15 +66,23 @@ export default function PlaylistPreview() {
 
 const Helper = ({ playlist }) => {
   const [fullPlaylist, setFullPlaylist] = useState({});
-
   // useEffect(() => {
   //   getDocument('playlists', playlist.playlistId, setFullPlaylist);
   // }, []);
   useEffect(() => {
-    const func = getSnapshot('playlists', playlist.playlistId, setFullPlaylist);
+    const func = getSnapshot(
+      'playlists',
+      playlist.playlistId,
+      setFullPlaylist,
+      fullPlaylist
+    );
     const unSub = func();
     return () => unSub();
   }, []);
+
+  if (!playlist) {
+    return <></>;
+  }
 
   let shuffled = [];
   if (fullPlaylist.videos) {

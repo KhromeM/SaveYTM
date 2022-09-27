@@ -21,7 +21,7 @@ function App() {
           <VideosProvider>
             <PlayerProvider>
               <DarkMode>
-                <Box color="white">
+                <Box color="white" sx={css}>
                   <NavBar />
                   <Routing />
                   <BottomPlayer />
@@ -62,5 +62,18 @@ function MainBody() {
     </>
   );
 }
+
+const css = {
+  '&::-webkit-scrollbar': {
+    width: '4px',
+  },
+  '&::-webkit-scrollbar-track': {
+    width: '2px',
+  },
+  '&::-webkit-scrollbar-thumb': {
+    background: 'black',
+    borderRadius: '24px',
+  },
+};
 
 export default App;
