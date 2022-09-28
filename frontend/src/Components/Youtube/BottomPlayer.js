@@ -94,12 +94,16 @@ function BottomPlayerIcons({ player, index, playControl }) {
   const { playerStatus } = usePlayer();
 
   const vid = playerStatus.playlist[index];
+  if (vid) {
+    document.title = `SaveYTM: ${vid.title}`;
+  }
 
   useEffect(() => {
     const interval = setInterval(() => {
       if (playing && player.getCurrentTime) {
         setTime(player.getCurrentTime());
-        console.log('Volume: ' + player.getVolume());
+
+        // console.log('Volume: ' + player.getVolume());
       }
     }, 300);
     return () => {
