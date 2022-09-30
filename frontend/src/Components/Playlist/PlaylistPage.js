@@ -7,11 +7,25 @@ import MusicBar from '../MusicBar.js';
 import { upload } from '../../Utils/server.js';
 import { nanoid } from 'nanoid';
 import { AiOutlineCloudDownload } from 'react-icons/ai';
-import { BsArchive } from 'react-icons/bs';
+import { ImShuffle } from 'react-icons/im';
+import { BsArchive, BsShuffle } from 'react-icons/bs';
+import { usePlayer } from '../../Utils/player.js';
+import { shuffle } from '../../Utils/functions.js';
+
 export default function Playlist() {
   const { user } = useAuth();
   const [playlist, setPlaylist] = useState({ videos: [] });
   const { playlistId } = parse(window.location.search);
+  const { setPlayerStatus } = usePlayer();
+
+  const playShuffle = () => {
+    const shuffled = playlist.videos.slice();
+    shuffle(shuffled);
+    setPlayerStatus({
+      active: true,
+      playlist: shuffled,
+    });
+  };
 
   // useEffect(() => {
   //   getDocument('playlists', playlistId, setPlaylist, playlist);
@@ -73,20 +87,28 @@ export default function Playlist() {
         ml="10vw"
       >
         <Flex>
-          <Heading size="lg">{'Playlist: ' + title}</Heading>
+          <Heading size="lg">{title.toUpperCase()}</Heading>
 
-          <Button
-            bg="white"
-            color="black"
-            _hover={{ bg: 'red.500', color: 'white' }}
-            onClick={handleUpload}
+          <Icon
+            as={BsShuffle}
+            fontSize={30}
+            cursor="pointer"
+            color="white"
+            _hover={{ color: 'red' }}
+            onClick={playShuffle}
             ml="auto"
+            mr="3vw"
+          />
+
+          <Icon
+            as={BsArchive}
+            fontSize={30}
+            cursor="pointer"
+            color="white"
+            _hover={{ color: 'red' }}
+            onClick={handleUpload}
             mr="9.25vw"
-            minW="120"
-          >
-            Archive
-            <Icon as={BsArchive} fontSize={30} ml="5" cursor="pointer" />
-          </Button>
+          />
         </Flex>
       </Flex>
       <Flex

@@ -64,7 +64,7 @@ const Helper = ({ playlist }) => {
         cursor={'pointer'}
       >
         <Text fontSize="2xl" as="b" ml="3">
-          {playlist.playlistTitle}{' '}
+          {playlist.playlistTitle.toUpperCase()}
         </Text>
         <Image
           src={playlist.thumbnail.url}

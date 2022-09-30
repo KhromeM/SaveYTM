@@ -92,7 +92,7 @@ const Helper = ({ playlist }) => {
   return (
     <Flex flexDir="column" my="5">
       <Text fontSize="xl" as="b" ml="3">
-        {playlist.playlistTitle}{' '}
+        {playlist.playlistTitle.toUpperCase()}
       </Text>
       <MusicBox playlist={shuffled} />
     </Flex>

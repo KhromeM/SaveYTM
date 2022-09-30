@@ -40,7 +40,8 @@ export default function SearchBar() {
   const handleSearch = () => {
     if (!videos.length) return;
     const resultsNow = search(searchTerm, videos, {
-      keySelector: video => video.title,
+      keySelector: video => video.title + ' ' + video.channel,
+      normalizeWhitespace: false,
     }).slice(0, 30);
     setResults(resultsNow);
   };
