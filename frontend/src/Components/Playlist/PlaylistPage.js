@@ -50,7 +50,10 @@ export default function Playlist() {
     const res = await upload(playlist, idToken);
   };
   const handleDownload = videoId => {
-    const url = `https://saveytm.s3.amazonaws.com/${user.uid}/${videoId}.webm`;
+    let url = `https://saveytm.s3.amazonaws.com/default/${videoId}.webm`;
+    if (user) {
+      url = `https://saveytm.s3.amazonaws.com/${user.uid}/${videoId}.webm`;
+    }
     window.open(url);
   };
   const { videos } = playlist;
@@ -64,17 +67,16 @@ export default function Playlist() {
         playlist={videos}
         size={4}
       />
-      {user && (
-        <Icon
-          onClick={() => handleDownload(vid.videoId)}
-          as={AiOutlineCloudDownload}
-          fontSize={30}
-          ml="auto"
-          mr="10vw"
-          cursor="pointer"
-          _hover={{ color: 'red.500' }}
-        />
-      )}
+
+      <Icon
+        onClick={() => handleDownload(vid.videoId)}
+        as={AiOutlineCloudDownload}
+        fontSize={30}
+        ml="auto"
+        mr="10vw"
+        cursor="pointer"
+        _hover={{ color: 'red.500' }}
+      />
     </Flex>
   ));
 
@@ -100,19 +102,16 @@ export default function Playlist() {
             ml="auto"
             mr="5"
           />
-          {user ? (
-            <Icon
-              as={BsArchive}
-              fontSize={30}
-              cursor="pointer"
-              color="white"
-              _hover={{ color: 'red' }}
-              onClick={handleUpload}
-              mr="10vw"
-            />
-          ) : (
-            <Box mr="5vw"></Box>
-          )}
+
+          <Icon
+            as={BsArchive}
+            fontSize={30}
+            cursor="pointer"
+            color="white"
+            _hover={{ color: 'red' }}
+            onClick={handleUpload}
+            mr="10vw"
+          />
         </Flex>
       </Flex>
       <Flex
