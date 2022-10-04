@@ -64,16 +64,17 @@ export default function Playlist() {
         playlist={videos}
         size={4}
       />
-
-      <Icon
-        onClick={() => handleDownload(vid.videoId)}
-        as={AiOutlineCloudDownload}
-        fontSize={30}
-        ml="auto"
-        mr="10vw"
-        cursor="pointer"
-        _hover={{ color: 'red.500' }}
-      />
+      {user && (
+        <Icon
+          onClick={() => handleDownload(vid.videoId)}
+          as={AiOutlineCloudDownload}
+          fontSize={30}
+          ml="auto"
+          mr="10vw"
+          cursor="pointer"
+          _hover={{ color: 'red.500' }}
+        />
+      )}
     </Flex>
   ));
 
@@ -99,16 +100,19 @@ export default function Playlist() {
             ml="auto"
             mr="5"
           />
-
-          <Icon
-            as={BsArchive}
-            fontSize={30}
-            cursor="pointer"
-            color="white"
-            _hover={{ color: 'red' }}
-            onClick={handleUpload}
-            mr="10vw"
-          />
+          {user ? (
+            <Icon
+              as={BsArchive}
+              fontSize={30}
+              cursor="pointer"
+              color="white"
+              _hover={{ color: 'red' }}
+              onClick={handleUpload}
+              mr="10vw"
+            />
+          ) : (
+            <Box mr="5vw"></Box>
+          )}
         </Flex>
       </Flex>
       <Flex
