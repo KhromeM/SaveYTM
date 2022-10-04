@@ -23,8 +23,10 @@ function App() {
               <DarkMode>
                 <Box color="white" sx={css}>
                   <NavBar />
-                  <Routing />
-                  <BottomPlayer />
+                  <Box my="10vh">
+                    <Routing />
+                    <BottomPlayer />
+                  </Box>
                 </Box>
               </DarkMode>
             </PlayerProvider>
@@ -50,12 +52,12 @@ function Routing() {
 function MainBody() {
   const { user } = useAuth();
   return (
-    <Box my="10vh">
+    <>
       {user ? (
         <>
-          <MusicGallery />
-          <Box mb="6vh"></Box>
           <PlaylistPreview />
+          <Box mb="6vh"></Box>
+          <MusicGallery />
         </>
       ) : (
         <>
@@ -67,7 +69,7 @@ function MainBody() {
             textAlign="center"
           >
             <Text fontSize={'4xl'}>
-              Log in and give access to YouTube to see your own playlists!
+              Log in and give access to YouTube to play your own playlists!
             </Text>
           </Flex>
           <PlaylistPreview />
@@ -75,7 +77,7 @@ function MainBody() {
           <MusicGallery />
         </>
       )}
-    </Box>
+    </>
   );
 }
 

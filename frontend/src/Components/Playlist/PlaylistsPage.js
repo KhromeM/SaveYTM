@@ -1,28 +1,25 @@
-import { Text, Flex, Heading, Image, Box } from '@chakra-ui/react';
-import { shuffle } from '../../Utils/functions';
-import { useState, useEffect } from 'react';
+import { Text, Flex, Image, Box } from '@chakra-ui/react';
 import { useUser } from '../../Utils/data';
 import { nanoid } from 'nanoid';
 import { Link } from 'react-router-dom';
+
 export default function PlaylistsPage() {
   const { userData } = useUser();
   let playlists = [];
   if (userData) {
-    playlists = userData.playlists;
+    playlists = userData.playlists || playlists;
   }
 
   if (!playlists.length) {
     return (
       <Flex
-        wrap="wrap"
-        minH="100"
-        minW="90vw"
+        minW="94vw"
         mx="3vw"
-        mt="10vh"
-        mb="5vh"
+        my="5vh"
         justifyContent="center"
+        textAlign="center"
       >
-        <Text fontSize={'2xl'}>You have no playlists</Text>
+        <Text fontSize={'4xl'}>You have no playlists</Text>
       </Flex>
     );
   }

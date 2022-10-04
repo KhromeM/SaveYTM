@@ -37,7 +37,7 @@ app.post("/giveoauth", async (req, res) => {
 		const userDB = await getUser(user.user_id);
 		userDB.token = token;
 		userDB.uid = user.user_id;
-		await setUser(userDB);
+		setUser(userDB);
 
 		// send response (use onsnapshot on frontend)
 		res.json({ status: "success", message: "OAuth credentials saved." });

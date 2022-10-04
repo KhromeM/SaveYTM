@@ -1,15 +1,16 @@
 import { Box, Text, Flex, Button, Heading, Image } from '@chakra-ui/react';
 import MusicBox from './MusicBox';
 import { useState, useEffect } from 'react';
-import { useVideos } from '../Utils/data';
+import { useVideos, useUser } from '../Utils/data';
 import { shuffle } from '../Utils/functions';
 import { nanoid } from 'nanoid';
 
 export default function MusicGallery() {
+  const { userData } = useUser();
   let videos = useVideos().videos;
   const previewLength = 6;
 
-  if (videos.length === 0) {
+  if (videos.length === 0 || !userData) {
     return <></>;
   }
 

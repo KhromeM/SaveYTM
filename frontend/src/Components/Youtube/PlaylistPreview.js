@@ -7,7 +7,6 @@ import { nanoid } from 'nanoid';
 export default function PlaylistPreview() {
   const [playlists, setPlaylists] = useState([]);
   const { userData } = useUser();
-  // console.log(userData);
 
   const getRandomPlaylists = (num, array) => {
     const returnArr = [];
@@ -29,22 +28,20 @@ export default function PlaylistPreview() {
   const previews = playlists.map((playlist, index) => {
     return <Helper playlist={playlist} key={nanoid()} />;
   });
-  if (!playlists.length) {
+  if (!playlists.length || !userData) {
     let message = 'You have no playlists. Create them on YouTube.';
     if (!userData) {
-      message = `Give us access to your youtube account. Click the profile icon then "Give Access"`;
+      message = `Give us access to your YouTube account. Click the profile icon then "Give Access"`;
     }
     return (
       <Flex
-        wrap="wrap"
-        minH="100"
-        minW="90vw"
+        minW="94vw"
         mx="3vw"
-        mt="10vh"
-        mb="5vh"
+        my="5vh"
         justifyContent="center"
+        textAlign="center"
       >
-        <Text fontSize={'2xl'}>{message}</Text>
+        <Text fontSize={'4xl'}>{message}</Text>
       </Flex>
     );
   }
