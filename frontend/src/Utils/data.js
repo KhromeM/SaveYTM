@@ -40,7 +40,9 @@ const useGetUser = () => {
       const unSub = func();
       return () => unSub();
     } else {
-      setUserData(false);
+      const func = getSnapshot('users', 'default', setUserData);
+      const unSub = func();
+      return () => unSub();
     }
   }, [user]);
 
@@ -83,11 +85,11 @@ const useGetVideos = () => {
       const unSub = func();
       return () => unSub();
     } else {
-      setUserVideos({ videos: [] });
+      const func = getSnapshot('videos', 'default', setUserVideos, userVideos);
+      const unSub = func();
+      return () => unSub();
     }
   }, [user]);
-
-  console.log(filteredVideos.length, userVideos.videos.length);
 
   return { videos: filteredVideos };
 };

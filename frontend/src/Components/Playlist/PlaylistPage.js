@@ -97,7 +97,7 @@ export default function Playlist() {
             _hover={{ color: 'red' }}
             onClick={playShuffle}
             ml="auto"
-            mr="3vw"
+            mr="5"
           />
 
           <Icon
@@ -107,7 +107,7 @@ export default function Playlist() {
             color="white"
             _hover={{ color: 'red' }}
             onClick={handleUpload}
-            mr="9.25vw"
+            mr="10vw"
           />
         </Flex>
       </Flex>

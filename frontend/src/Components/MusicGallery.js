@@ -36,14 +36,13 @@ export default function MusicGallery() {
   ));
 
   return (
-    <Box mt="10vh" textAlign="center">
+    <Box textAlign="center">
       <Heading> Random Order</Heading>
       <Flex
         wrap="wrap"
         minH="300"
-        minW="90vw"
+        minW="74vw"
         mx="13vw"
-        mb="5vh"
         // justifyContent="center"
       >
         {musicBoxes}

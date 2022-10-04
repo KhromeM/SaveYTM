@@ -28,6 +28,7 @@ app.post("/getoauthlink", (req, res) => {
 
 app.post("/giveoauth", async (req, res) => {
 	const user = req.body._user;
+	// console.log("user: " + user);
 	const code = req.body.code;
 	try {
 		const token = await getToken(code);
@@ -36,7 +37,7 @@ app.post("/giveoauth", async (req, res) => {
 		const userDB = await getUser(user.user_id);
 		userDB.token = token;
 		userDB.uid = user.user_id;
-		setUser(userDB);
+		await setUser(userDB);
 
 		// send response (use onsnapshot on frontend)
 		res.json({ status: "success", message: "OAuth credentials saved." });

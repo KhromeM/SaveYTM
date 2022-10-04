@@ -3,7 +3,7 @@ import { Text, Flex, Heading } from '@chakra-ui/react';
 import { shuffle } from '../../Utils/functions';
 import { useState, useEffect } from 'react';
 import { useUser, getSnapshot } from '../../Utils/data';
-
+import { nanoid } from 'nanoid';
 export default function PlaylistPreview() {
   const [playlists, setPlaylists] = useState([]);
   const { userData } = useUser();
@@ -27,7 +27,7 @@ export default function PlaylistPreview() {
   }, [userData]);
 
   const previews = playlists.map((playlist, index) => {
-    return <Helper playlist={playlist} key={index} />;
+    return <Helper playlist={playlist} key={nanoid()} />;
   });
   if (!playlists.length) {
     let message = 'You have no playlists. Create them on YouTube.';
@@ -48,17 +48,9 @@ export default function PlaylistPreview() {
       </Flex>
     );
   }
-  return (
-    <Flex
-      wrap="wrap"
-      minH="300"
-      minW="90vw"
-      mt="10vh"
-      mb="15vh"
-      mx="13vw"
 
-      // justifyContent="center"
-    >
+  return (
+    <Flex wrap="wrap" minH="300" minW="74vw" mx="13vw">
       {previews}
     </Flex>
   );

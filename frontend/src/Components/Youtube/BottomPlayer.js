@@ -71,7 +71,7 @@ export default function BottomPlayer() {
     }
   }, [playerStatus]);
 
-  if (!playerStatus.active || !user) {
+  if (!playerStatus.active) {
     return <></>;
   }
   return (
@@ -147,6 +147,7 @@ function BottomPlayerIcons({ player, index, playControl }) {
       ) : (
         <Box
           minW="100vw"
+          maxW="100vw"
           bg="youtube.gray"
           minH="65"
           maxH="80"

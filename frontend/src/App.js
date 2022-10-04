@@ -1,4 +1,4 @@
-import { ChakraProvider, Box, DarkMode } from '@chakra-ui/react';
+import { ChakraProvider, Box, DarkMode, Flex, Text } from '@chakra-ui/react';
 import theme from './theme';
 import NavBar from './Components/NavBar';
 import MusicGallery from './Components/MusicGallery';
@@ -50,16 +50,32 @@ function Routing() {
 function MainBody() {
   const { user } = useAuth();
   return (
-    <>
+    <Box my="10vh">
       {user ? (
         <>
           <MusicGallery />
+          <Box mb="6vh"></Box>
           <PlaylistPreview />
         </>
       ) : (
-        <></>
+        <>
+          <Flex
+            minW="94vw"
+            mx="3vw"
+            my="5vh"
+            justifyContent="center"
+            textAlign="center"
+          >
+            <Text fontSize={'4xl'}>
+              Log in and give access to YouTube to see your own playlists!
+            </Text>
+          </Flex>
+          <PlaylistPreview />
+          <Box mb="6vh"></Box>
+          <MusicGallery />
+        </>
       )}
-    </>
+    </Box>
   );
 }
 
